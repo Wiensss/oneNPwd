@@ -1,0 +1,27 @@
+[class*='light'],
+page {
+  --BG-0: #ffffff;
+  --BG-1: #f7f7f7;
+  --BG-2: #ebebeb;
+  --BG-3: #dcdcdc;
+  --TEXT-0: #000000;
+  --TEXT-1: #969696;
+  --PINK: #ff375f;
+  --BTN-BG: #ff375f;
+  --BTN-TEXT: #fafafa;
+  --BTN-HOVER: #969696;
+}
+
+[class*='dark'],
+page {
+  --BG-0: #050505;
+  --BG-1: #141414;
+  --BG-2: #1e1e1e;
+  --BG-3: #2d2d2d;
+  --TEXT-0: #fafafa;
+  --TEXT-1: #646464;
+  --PINK: #ff375f;
+  --BTN-BG: #1e1e1e;
+  --BTN-TEXT: #ff375f;
+  --BTN-HOVER: #2d2d2d;
+}

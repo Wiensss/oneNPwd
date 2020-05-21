@@ -1,0 +1,26 @@
+<c-slideview
+  icon
+  buttons="{{ buttons }}"
+  bind:buttontap="onTap"
+>
+  <view
+    class="cell"
+    hover-class="bg-opacity"
+  >
+    <view
+      class="cell-wrapper"
+      style="background: {{ bgColor }}; color: {{ color }}"
+    >
+      <view class="cell-field cell-ellipsis bg-opacity">{{ title }}</view>
+      <view
+        wx:if="{{ tag.name }}"
+        class="cell-tag"
+        style="background: {{ tag.bgColor }}; color: {{ tag.color }}"
+      >{{ tag.name }}</view>
+      <c-icon
+        name="cloudcheck"
+        color="{{ cloud ? 'var(--PINK)' : 'var(--TEXT-1)' }}"
+      />
+    </view>
+  </view>
+</c-slideview>

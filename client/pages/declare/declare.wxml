@@ -1,0 +1,33 @@
+<template name="declare">
+  <view class="margin-ver-m">
+    <c-icon name="item" />
+    <text class="text-bold padding-level-s">{{ title }}</text>
+  </view>
+  <view class="margin-bottom-l text-s">
+    <block
+      wx:for="{{ content }}"
+      wx:key="*this"
+      wx:for-item="part"
+      wx:for-index="idx"
+    >
+      <text
+        selectable
+        class="block margin-ver-s {{ style[idx] ? style[idx] : '' }}"
+      >{{ part }}</text>
+    </block>
+  </view>
+</template>
+
+<view class="{{ theme }} container">
+  <view class="wrapper text-main">
+    <block
+      wx:for="{{ article }}"
+      wx:key="title"
+    >
+      <template
+        is="declare"
+        data="{{ ...item }}"
+      />
+    </block>
+  </view>
+</view>

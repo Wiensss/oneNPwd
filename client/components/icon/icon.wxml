@@ -1,0 +1,5 @@
+<view
+  class="c-icon {{ name }}"
+  style="color: {{ color }}; font-size: {{ size }}"
+  bind:tap="onClick"
+/>

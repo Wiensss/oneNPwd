@@ -1,0 +1,22 @@
+<template name="theme">
+  <c-modal
+    show="{{ show }}"
+    data-state="Theme"
+    catch:close="stateBus"
+  >
+    <view
+      wx:for="{{ themeType }}"
+      wx:key="type"
+      data-type="{{ item.type }}"
+      class="flex flex-center margin-level-l height-100r {{ index === 0 ? 'hairline': '' }}"
+      style="color: {{ theme === item.type ? 'var(--PINK)' : 'var(--TEXT-0)' }}"
+      catch:tap="bindTheme"
+    >
+      <c-icon
+        name="{{ item.type === 'light' ? 'sun' : 'moon' }}"
+        color="{{ theme === item.type ? 'var(--PINK)' : 'var(--TEXT-0)' }}"
+      />
+      <text class="padding-left-m">{{ item.name }}</text>
+    </view>
+  </c-modal>
+</template>

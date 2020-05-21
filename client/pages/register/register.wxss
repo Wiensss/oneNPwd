@@ -1,0 +1,96 @@
+.wrapper {
+  box-sizing: border-box;
+  margin: 30rpx 45rpx 0 45rpx;
+  padding: 30rpx 15rpx;
+  min-height: calc(100vh - 30rpx);
+  border-top-left-radius: 50rpx;
+  border-top-right-radius: 50rpx;
+  background-color: var(--BG-1);
+}
+
+.field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  min-height: 100rpx;
+}
+
+.field input {
+  flex: 1;
+  padding-right: 20rpx;
+  font-size: 32rpx;
+  color: var(--TEXT-1);
+}
+
+.field-col {
+  display: flex;
+  flex-direction: column;
+  padding: 0 30rpx;
+}
+
+.field-col textarea {
+  margin-top: 10rpx;
+  padding: 20rpx;
+  font-size: 30rpx;
+  color: var(--TEXT-1);
+  width: auto;
+  height: 120rpx;
+  line-height: 30rpx;
+  border-radius: 20rpx;
+  background-color: var(--BG-2);
+}
+
+.field-title {
+  position: relative;
+  padding-right: 30rpx;
+  line-height: 60rpx;
+  height: 60rpx;
+  width: 140rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--TEXT-0);
+  text-align: justify;
+}
+
+.field-icon {
+  display: inline-block;
+  color: var(--PINK);
+}
+
+.area-wrapper {
+  margin-top: 10rpx;
+  margin-right: 40rpx;
+}
+
+.area-tag {
+  position: absolute;
+  padding: 20rpx;
+  bottom: 0;
+  right: 0;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: var(--PINK);
+  font-size: 28rpx;
+  transition: opacity 0.4s;
+}
+
+.account-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10rpx 70rpx;
+  line-height: 32rpx;
+  font-size: 30rpx;
+}
+
+.error {
+  color: var(--PINK) !important;
+  border-bottom: 1px solid var(--PINK);
+}

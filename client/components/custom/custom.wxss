@@ -1,0 +1,15 @@
+:host {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: var(--BG-0);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.custom-img-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 5px 25rpx;
+}

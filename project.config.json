@@ -1,0 +1,75 @@
+{
+	"miniprogramRoot": "client/",
+	"cloudfunctionRoot": "server/",
+	"libVersion": "2.11.0",
+	"projectname": "ownNPwd",
+	"simulatorType": "wechat",
+	"appid": "wxda8515fa2987e0cb",
+	"simulatorPluginLibVersion": {},
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"enhance": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": false,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"outputPath": "",
+			"disablePlugins": []
+		},
+		"bundle": true,
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false
+	},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "表单：add",
+					"pathName": "pages/register/register",
+					"query": "type=add",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "相关说明",
+					"pathName": "pages/declare/declare",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

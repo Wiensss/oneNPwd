@@ -1,0 +1,106 @@
+<import src="./template/about.wxml" />
+<import src="./template/theme.wxml" />
+<import src="./template/detail.wxml" />
+<import src="./template/drawer.wxml" />
+<import src="./template/actionTip.wxml" />
+
+<c-loading show="{{ isLoading }}" />
+
+<view
+  class="{{ theme }} container"
+  style="margin-top: {{ curBarHeight }}; height: calc(100vh - {{ curBarHeight }})"
+>
+  <!-- 自定义标题栏 -->
+  <c-custom
+    id="navBar"
+    data-state="Drawer"
+    rotate="{{ isDrawer }}"
+    avatar="{{ userInfo.avatarUrl }}"
+    nick-name="{{ userInfo.nickName }}"
+    catch:open="stateBus"
+    catch:getuserinfo="login"
+  />
+
+  <!-- 登录提示 -->
+  <c-notify
+    color="var(--TEXT-0)"
+    bg-color="var(--BG-1)"
+    show="{{ isLogin }}"
+    time="{{ lastTime }}"
+    name="{{ userInfo.nickName }}"
+  />
+
+  <!-- 主内容 -->
+  <view class="wrapper">
+    <block
+      wx:if="{{ userInfo }}"
+      wx:for="{{ pwdList }}"
+      wx:key="token"
+    >
+      <c-cell
+        color="var(--TEXT-0)"
+        bg-color="var(--BG-2)"
+        tag="{{ item.tag }}"
+        cloud="{{ item.cloud }}"
+        title="{{ item.field }}"
+        data-token="{{ item.token }}"
+        catch:tap="bindDetail"
+        catch:click="bindAction"
+      />
+    </block>
+  </view>
+
+  <!--  底部固定按钮 -->
+  <view
+    class="realtive fixed-bottom"
+    hover-class="bg-opacity"
+  >
+    <c-icon
+      name="pwd"
+      size="80rpx"
+      data-field="lock"
+      class="fixed-button"
+    />
+    <button
+      class="opacity-btn"
+      open-type="getUserInfo"
+      catch:getuserinfo="login"
+    />
+  </view>
+
+  <!-- 抽屉 -->
+  <template
+    is="drawer"
+    data="{{ drawerItem, show: isDrawer }}"
+  />
+
+  <!-- 密码详细项模态框 -->
+  <template
+    is="detail"
+    data="{{ isTip, isSafe, isDetail, isQuestion, numMap, curItem }}"
+  />
+
+  <!-- 上传模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.upload, show: isUpload }}"
+  />
+
+  <!-- 删除模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.delete, show: isDelete }}"
+  />
+
+  <!-- 主题模态框 -->
+  <template
+    is="theme"
+    data="{{ theme, themeType, show: isTheme }}"
+  />
+
+  <!-- 关于我模态框 -->
+  <template
+    is="about"
+    data="{{ avatar, show: isAbout }}"
+  />
+</view>

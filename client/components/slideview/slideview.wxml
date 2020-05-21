@@ -1,0 +1,50 @@
+<wxs
+  module="handler"
+  src="./slideview.wxs"
+></wxs>
+<view class="slideview movable-view slideview_icon">
+  <view
+    class="slideview_left left"
+    show="{{ show }}"
+    prop="{{ size }}"
+    disable="{{ disable }}"
+    duration="{{ duration }}"
+    rebounce="{{ rebounce }}"
+    change:prop="{{ handler.sizeReady }}"
+    change:show="{{ handler.showChange }}"
+    change:disable="{{ handler.disableChange }}"
+    change:rebounce="{{ handler.rebounceChange }}"
+    change:duration="{{ handler.durationChange }}"
+    bindtouchend="{{ handler.touchend }}"
+    bindtouchmove="{{ handler.touchmove }}"
+    bindtouchstart="{{ handler.touchstart }}"
+    bindtransitionend="{{ handler.transitionEnd }}"
+  >
+    <slot></slot>
+  </view>
+  <view class="slideview_right right">
+    <view
+      class="slideview_buttons"
+      wx:if="{{ buttons && buttons.length }}"
+    >
+      <view
+        wx:for="{{ buttons }}"
+        wx:key="index"
+        class="btn slideview_btn_wrp"
+      >
+        <view
+          class="slideview_btn"
+          style="background: {{item.bgColor }}"
+          data-index="{{ index }}"
+          data-data="{{ item.data }}"
+          bindtap="{{ handler.hideButton }}"
+        >
+          <c-icon
+            name="{{ item.icon }}"
+            color="{{ item.color }}"
+          />
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

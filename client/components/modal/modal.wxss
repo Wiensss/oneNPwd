@@ -1,0 +1,61 @@
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.7);
+  transform: scale(1.185);
+  transition: all 0.3s ease-in-out 0s;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.modal-drawer {
+  width: 80vw;
+  min-height: 10vh;
+  border-radius: 20rpx;
+  background-color: var(--BG-3);
+  transition-duration: 0.3s;
+  overflow: hidden;
+}
+
+.modal-active {
+  transition-duration: 0.3s;
+  transform: scale(1);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.modal-header {
+  padding: 30rpx 50rpx;
+  width: 100%;
+  font-size: 35rpx;
+  font-weight: bold;
+  text-align: center;
+  color: var(--TEXT-0);
+}
+
+.modal-center {
+  box-sizing: border-box;
+  margin: 20rpx 50rpx;
+  width: 100%;
+  max-height: 60vh;
+  color: var(--TEXT-1);
+}
+
+.modal-btn {
+  flex: 1;
+  margin-top: 50rpx;
+  color: var(--PINK) !important;
+  background-color: inherit !important;
+}
+
+.modal-hover {
+  background-color: var(--BG-2) !important;
+}

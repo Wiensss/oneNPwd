@@ -1,0 +1,157 @@
+<template name="detail">
+  <c-modal
+    closeMark="{{ !isTip }}"
+    onlyConfirm="{{ isTip }}"
+    show="{{ isDetail || isTip }}"
+    data-state="{{ isTip ? 'Tip' : 'Detail' }}"
+    title="{{ isTip ? '安全提示': curItem.data.field }}"
+    catch:confirm="showSafe"
+    catch:close="stateBus"
+  >
+    <block wx:if="{{ isTip }}">
+      <view class="padding-level-l">当前设备不支持/未开通指纹认证，无法进行身份验证</view>
+    </block>
+
+    <block wx:else>
+      <view
+        class="flex-col padding-bottom-m padding-level-l"
+        catch:tap="bindCopy"
+      >
+        <!-- 帐号名称 -->
+        <view class="flex flex-row-between flex-col-center padding-ver-s">
+          <text class="min-width-150r">帐号名称</text>
+          <view
+            wx:if="{{ curItem.name }}"
+            data-info="{{ curItem.name }}"
+            class="text-main text-ellipsis"
+          >{{ curItem.name }}</view>
+          <c-icon
+            wx:else
+            color
+            name="empty"
+          />
+        </view>
+
+        <view class="{{ isSafe ? '' : 'blur' }}">
+          <!-- 密码 -->
+          <view class="flex flex-row-between flex-col-center padding-ver-s">
+            <text
+              decode
+              class="min-width-150r"
+            >密&emsp;&emsp;码</text>
+            <view
+              class="text-main text-ellipsis"
+              data-info="{{ curItem.password }}"
+            >{{ curItem.password }}</view>
+          </view>
+
+          <!-- 手机号码 -->
+          <view class="flex flex-row-between flex-col-center padding-ver-s">
+            <text class="min-width-150r">手机号码</text>
+            <view
+              class="text-main text-ellipsis"
+              wx:if="{{ curItem.phone }}"
+              data-info="{{ curItem.phone }}"
+            >{{ curItem.phone }}</view>
+            <c-icon
+              wx:else
+              color
+              name="empty"
+            />
+          </view>
+
+          <!-- 电子邮箱 -->
+          <view class="flex flex-row-between flex-col-center padding-ver-s">
+            <text class="min-width-150r">电子邮箱</text>
+            <view
+              class="text-main text-ellipsis"
+              wx:if="{{ curItem.email }}"
+              data-info="{{ curItem.email }}"
+            >{{ curItem.email }}</view>
+            <c-icon
+              wx:else
+              color
+              name="empty"
+            />
+          </view>
+
+          <!-- 密保问题 -->
+          <view class="flex flex-row-between flex-col-center padding-ver-s">
+            <text>密保问题</text>
+            <c-icon
+              wx:if="{{ curItem.options.length === 0 }}"
+              name="empty"
+              color
+            />
+            <c-icon
+              wx:else
+              name="option"
+              data-state="Question"
+              class="{{ isQuestion ? 'bg-opacity' : '' }}"
+              catch:tap="stateBus"
+            />
+          </view>
+          <view
+            wx:if="{{ isQuestion }}"
+            class="animate-fadein-up'"
+          >
+            <block
+              wx:for="{{ curItem.options }}"
+              wx:key="question"
+            >
+              <view class="flex flex-row-between flex-col-center padding-level margin-ver-s">
+                <text class="min-width-120r">问题{{ numMap[index] }}</text>
+                <view
+                  data-info="{{ item.question }}"
+                  class="text-main text-ellipsis"
+                >{{ item.question }}</view>
+              </view>
+              <view class="flex flex-row-between flex-col-center padding-level">
+                <text class="min-width-120r">答案{{ numMap[index] }}</text>
+                <view
+                  data-info="{{ item.answer }}"
+                  class="text-main text-italic text-ellipsis"
+                >{{ item.answer }}</view>
+              </view>
+            </block>
+          </view>
+        </view>
+
+        <!-- 同步状态 -->
+        <view class="flex flex-row-between flex-col-center padding-ver-s">
+          <text class="min-width-150r">同步状态</text>
+          <view>
+            <view
+              class="inline-block padding-right text-s text-italic"
+            >{{ curItem.cloud ? '(已同步)' : '(未同步)' }}</view>
+            <c-icon
+              name="cloudcheck"
+              color="{{ curItem.cloud ? 'var(--PINK)' : '' }}"
+            />
+          </view>
+        </view>
+
+        <!-- 备注 -->
+        <view class="flex flex-row-between flex-col-center padding-ver-s">
+          <text decode>备&emsp;&emsp;注</text>
+          <c-icon
+            wx:if="{{ !curItem.mark }}"
+            name="empty"
+            color
+          />
+        </view>
+        <view
+          class="detail-mark"
+          wx:if="{{ curItem.mark }}"
+          data-info="{{ curItem.mark }}"
+        >{{ curItem.mark }}</view>
+
+        <!-- 更新于 -->
+        <view class="flex flex-row-between flex-col-center padding-ver-s">
+          <text class="min-width-150r">更新于</text>
+          <text class="text-s text-italic">{{ curItem.update }}</text>
+        </view>
+      </view>
+    </block>
+  </c-modal>
+</template>

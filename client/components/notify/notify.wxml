@@ -1,0 +1,18 @@
+<view
+  wx:if="{{ show }}"
+  class="notify notify-animate"
+>
+  <view
+    class="notify-container"
+    style="background: {{ bgColor }}; color: {{ color }}"
+  >
+    <view>
+      🎉欢迎回来，
+      <text class="user-font">{{ name }}</text>❗❗
+    </view>
+    <view>
+      上次登录时间为
+      <text class="user-font">{{ time }}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+<template name="drawer">
+  <c-drawer
+    data-state="Drawer"
+    show="{{ show }}"
+    catch:close="stateBus"
+  >
+    <view class="flex-col flex-row-center height-full">
+      <block
+        wx:for="{{ drawerItem }}"
+        wx:key="title"
+      >
+        <view
+          class="relative drawer-item"
+          hover-class="bg-opacity"
+          data-state="{{ item.state }}"
+          catch:tap="{{ item.event }}"
+        >
+          <c-icon
+            name="{{ item.icon }}"
+            color="var(--BTN-TEXT)"
+          />
+          {{ item.title }}
+          <button
+            class="opacity-btn"
+            wx:if="{{ item.openType }}"
+            open-type="{{ item.openType }}"
+          />
+        </view>
+      </block>
+    </view>
+  </c-drawer>
+</template>

@@ -1,0 +1,62 @@
+@import './style/main.wxss';
+
+page {
+  margin: 0;
+  padding: 0;
+  font-size: 32rpx;
+  font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica,
+    Segoe UI, Arial, Roboto, PingFang SC, Hiragino Sans GB, Microsoft Yahei,
+    sans-serif;
+}
+
+.light,
+.dark {
+  background: var(--BG-0);
+}
+
+.container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100%;
+}
+
+.c-btn {
+  padding: 0 50rpx !important;
+  border-radius: 10rpx !important;
+  color: var(--BTN-TEXT) !important;
+  background-color: var(--BTN-BG) !important;
+}
+
+.c-hover {
+  background-color: var(--BTN-HOVER) !important;
+}
+
+.opacity-btn {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+}
+
+.hairline {
+  position: relative;
+}
+
+.hairline:after {
+  content: ' ';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  pointer-events: none;
+  transform: scale(0.5);
+  transform-origin: center;
+  border: 0 solid var(--TEXT-1);
+  border-bottom-width: 1px;
+}

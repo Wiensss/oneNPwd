@@ -1,0 +1,41 @@
+<view
+  class="modal-mask {{ show ? 'modal-active': '' }}"
+  style="z-index: {{ zIndex }}"
+  catch:tap="onHideMask"
+  catch:touchmove="noop"
+>
+  <view
+    class="modal-drawer"
+    catch:tap="noop"
+  >
+    <view class="flex-col flex-center">
+      <view
+        wx:if="{{ title }}"
+        class="modal-header"
+      >{{ title }}</view>
+      <scroll-view
+        scroll-y
+        class="modal-center"
+      >
+        <slot />
+      </scroll-view>
+      <view
+        class="flex width-full"
+        wx:if="{{ showCancel || onlyConfirm }}"
+      >
+        <button
+          wx:if="{{ showCancel }}"
+          class="modal-btn"
+          hover-class="modal-hover"
+          catch:tap="onCancel"
+        >取消</button>
+        <button
+          wx:if="{{ showCancel || onlyConfirm }}"
+          class="modal-btn"
+          hover-class="modal-hover"
+          catch:tap="onConfirm"
+        >确认</button>
+      </view>
+    </view>
+  </view>
+</view>
