@@ -31,7 +31,10 @@ Component({
 
   observers: {
     isSafe: function (state) {
-      if (state) this._parsePwdInfo()
+      state && this._parsePwdInfo()
+    },
+    isDetail: function (state) {
+      !state && this.setData({ isQuestion: false })
     },
     isLogin: async function (state) {
       this.setData({
@@ -43,9 +46,6 @@ Component({
 
       console.log('[login state]: ', state)
       console.warn(state ? '已授权' : '未授权')
-    },
-    isDetail: function (state) {
-      if (state && !this.data.isSafe) this.checkSafe()
     }
   },
 
@@ -208,6 +208,7 @@ Component({
       this.setData({ curItem, isDetail: true })
 
       if (isSafe) this._parsePwdInfo()
+      else this._checkSafe()
     },
 
     bindAction({ detail, currentTarget }) {
@@ -258,14 +259,14 @@ Component({
       }
     },
 
-    async checkSafe() {
+    async _checkSafe() {
       const { curItem } = this.data
 
       try {
         if (await checkFingerPrint()) {
           const matchRes = await startFingerPrint(curItem.token)
 
-          if (matchRes === curItem.token) this.setData({ isSafe: true })
+          if (matchRes === curItem.token) this.showSafe()
         } else this.setData({ isTip: true })
       } catch (err) {
         if (err === 'startSoterAuthentication:fail cancel') return
