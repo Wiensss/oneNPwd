@@ -5,6 +5,9 @@
 .flex {
   display: flex;
 }
+.flex-inline {
+  display: inline-flex;
+}
 .flex-col {
   display: flex;
   flex-direction: column;
@@ -36,7 +39,7 @@
 .block {
   display: block;
 }
-.inline-block {
+.block-inline {
   display: inline-block;
 }
 
@@ -255,6 +258,9 @@
 .height-half {
   height: 50vh;
 }
+.height-55r {
+  height: 55rpx;
+}
 .height-100r {
   height: 100rpx;
 }
@@ -277,6 +283,9 @@
 }
 .width-half {
   width: 50vw;
+}
+.width-55r {
+  width: 55rpx;
 }
 .width-100r {
   width: 100rpx;

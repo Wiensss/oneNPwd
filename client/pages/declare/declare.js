@@ -38,8 +38,8 @@ Component({
         title: '联系我',
         content: ['📩 邮箱：', 'Colasour.vince@gmail.com'],
         style: {
-          0: 'inline-block',
-          1: 'inline-block text-pink text-italic'
+          0: 'block-inline',
+          1: 'block-inline text-pink text-italic'
         }
       }
     ]

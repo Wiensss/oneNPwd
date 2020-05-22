@@ -4,7 +4,7 @@
     onlyConfirm="{{ isTip }}"
     show="{{ isDetail || isTip }}"
     data-state="{{ isTip ? 'Tip' : 'Detail' }}"
-    title="{{ isTip ? '安全提示': curItem.data.field }}"
+    title="{{ isTip ? '安全提示': curItem.field }}"
     catch:confirm="showSafe"
     catch:close="stateBus"
   >
@@ -25,11 +25,15 @@
             data-info="{{ curItem.name }}"
             class="text-main text-ellipsis"
           >{{ curItem.name }}</view>
-          <c-icon
+          <view
             wx:else
-            color
-            name="empty"
-          />
+            class="flex-inline flex-row-center width-55r"
+          >
+            <c-icon
+              color
+              name="empty"
+            />
+          </view>
         </view>
 
         <view class="{{ isSafe ? '' : 'blur' }}">
@@ -53,11 +57,15 @@
               wx:if="{{ curItem.phone }}"
               data-info="{{ curItem.phone }}"
             >{{ curItem.phone }}</view>
-            <c-icon
+            <view
               wx:else
-              color
-              name="empty"
-            />
+              class="flex-inline flex-row-center width-55r"
+            >
+              <c-icon
+                color
+                name="empty"
+              />
+            </view>
           </view>
 
           <!-- 电子邮箱 -->
@@ -68,28 +76,34 @@
               wx:if="{{ curItem.email }}"
               data-info="{{ curItem.email }}"
             >{{ curItem.email }}</view>
-            <c-icon
+            <view
               wx:else
-              color
-              name="empty"
-            />
+              class="flex-inline flex-row-center width-55r"
+            >
+              <c-icon
+                color
+                name="empty"
+              />
+            </view>
           </view>
 
           <!-- 密保问题 -->
           <view class="flex flex-row-between flex-col-center padding-ver-s">
             <text>密保问题</text>
-            <c-icon
-              wx:if="{{ curItem.options.length === 0 }}"
-              name="empty"
-              color
-            />
-            <c-icon
-              wx:else
-              name="option"
-              data-state="Question"
-              class="{{ isQuestion ? 'bg-opacity' : '' }}"
-              catch:tap="stateBus"
-            />
+            <view class="flex-inline flex-row-center width-55r">
+              <c-icon
+                color
+                name="empty"
+                wx:if="{{ curItem.options.length === 0 }}"
+              />
+              <c-icon
+                wx:else
+                name="option"
+                data-state="Question"
+                class="{{ isQuestion ? 'bg-opacity' : '' }}"
+                catch:tap="stateBus"
+              />
+            </view>
           </view>
           <view
             wx:if="{{ isQuestion }}"
@@ -117,28 +131,18 @@
           </view>
         </view>
 
-        <!-- 同步状态 -->
-        <view class="flex flex-row-between flex-col-center padding-ver-s">
-          <text class="min-width-150r">同步状态</text>
-          <view>
-            <view
-              class="inline-block padding-right text-s text-italic"
-            >{{ curItem.cloud ? '(已同步)' : '(未同步)' }}</view>
-            <c-icon
-              name="cloudcheck"
-              color="{{ curItem.cloud ? 'var(--PINK)' : '' }}"
-            />
-          </view>
-        </view>
-
         <!-- 备注 -->
         <view class="flex flex-row-between flex-col-center padding-ver-s">
           <text decode>备&emsp;&emsp;注</text>
-          <c-icon
+          <view
             wx:if="{{ !curItem.mark }}"
-            name="empty"
-            color
-          />
+            class="flex-inline flex-row-center width-55r"
+          >
+            <c-icon
+              name="empty"
+              color
+            />
+          </view>
         </view>
         <view
           class="detail-mark"
@@ -146,10 +150,44 @@
           data-info="{{ curItem.mark }}"
         >{{ curItem.mark }}</view>
 
+        <!-- 查看次数 -->
+        <view class="flex flex-row-between flex-col-center padding-ver-s">
+          <text class="min-width-150r">查看次数</text>
+          <view
+            class="flex-item flex-inline flex-row-end padding-right-m text-s text-italic"
+          >{{ curItem.view }}</view>
+          <view class="flex-inline flex-row-center width-55r">
+            <c-icon
+              color
+              name="view"
+            />
+          </view>
+        </view>
+
         <!-- 更新于 -->
         <view class="flex flex-row-between flex-col-center padding-ver-s">
           <text class="min-width-150r">更新于</text>
-          <text class="text-s text-italic">{{ curItem.update }}</text>
+          <view class="block-inline padding-right text-s text-italic">{{ curItem.update }}</view>
+          <view class="flex-inline flex-row-center width-55r">
+            <c-icon
+              color
+              name="time"
+            />
+          </view>
+        </view>
+
+        <!-- 备份状态 -->
+        <view class="flex flex-row-between flex-col-center padding-ver-s">
+          <text class="min-width-150r">{{ curItem.cloud ? '备份于' : '备份状态' }}</text>
+          <view
+            class="block-inline padding-right text-s text-italic"
+          >{{ curItem.cloud ? curItem.cloud : '(未备份)' }}</view>
+          <view class="flex-inline flex-row-center width-55r">
+            <c-icon
+              name="cloudcheck"
+              color="{{ curItem.cloud ? 'var(--PINK)' : '' }}"
+            />
+          </view>
         </view>
       </view>
     </block>

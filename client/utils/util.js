@@ -39,6 +39,8 @@ const decryptData = data => {
  * @returns {String} String
  */
 const formatTime = timestamp => {
+  if (!timestamp || typeof timestamp !== 'number') return 0
+
   return moment(timestamp).format('YYYY/MM/DD HH:mm:ss')
 }
 
@@ -80,7 +82,7 @@ const debounce = fn => {
 }
 
 /**
- * 解析 JSON 数组对象
+ * 解析 JSON 对象数组
  *
  * @param {Array} array 目标数组
  * @returns {Array} Object
@@ -90,6 +92,19 @@ const parseJson = array => {
   if (array.length < 1) return []
 
   return array.map(item => JSON.parse(item))
+}
+
+/**
+ * 序列化对象数组
+ *
+ * @param {Array} array 目标数组
+ * @returns {Array} Object
+ */
+const stringifyArray = array => {
+  if (!array instanceof Array) return []
+  if (array.length < 1) return []
+
+  return array.map(item => JSON.stringify(item))
 }
 
 /**
@@ -173,6 +188,7 @@ export {
   decryptData,
   encryptData,
   updateArray,
+  stringifyArray,
   findArrayIndex,
   filterEmptyArray
 }

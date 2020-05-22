@@ -67,6 +67,8 @@ Component({
   },
 
   data: {
+    isMinus: true,
+    mark: '',
     num: 0,
     account: 0,
     _pwdInfo: {},
@@ -149,16 +151,16 @@ Component({
       }
 
       const {
-        tag,
         mark,
-        name,
-        view,
-        cloud,
         field,
-        email,
-        phone,
         options,
-        password
+        password,
+        tag = {},
+        view = 0,
+        cloud = 0,
+        name = '',
+        email = '',
+        phone = ''
       } = this.data
 
       const pwdData = {
@@ -181,18 +183,30 @@ Component({
     }),
 
     reset: throttle(function () {
-      // this.setData({
-      //   num: 0,
-      //   mark: '',
-      //   name: '',
-      //   email: '',
-      //   field: '',
-      //   phone: '',
-      //   password: '',
-      //   options: [],
-      //   isPlus: false,
-      //   isMinus: true
-      // })
+      const {
+        tag,
+        mark,
+        name,
+        field,
+        email,
+        phone,
+        options,
+        password
+      } = this.data._pwdInfo
+
+      this.setData({
+        isPlus: false,
+        isMinus: true,
+        tag: tag || {},
+        mark: mark || '',
+        name: name || '',
+        email: email || '',
+        field: field || '',
+        phone: phone || '',
+        options: options || [],
+        password: password || '',
+        num: options.length || 0
+      })
     }),
 
     _updateOptions(field) {
@@ -275,10 +289,10 @@ Component({
 
         tip({ type: 'success', msg: '保存成功' })
 
-        // setTimeout(() => {
-        //   wx.navigateBack({ delta: 2 })
-        //   this.getOpenerEventChannel().emit('registerDone')
-        // }, 600)
+        setTimeout(() => {
+          wx.navigateBack({ delta: 2 })
+          this.getOpenerEventChannel().emit('registerDone')
+        }, 600)
       } catch (err) {
         tip({ msg: '未知错误, 请稍后重试！' })
         console.log('[call _savePwdInfo fail]: ', err)

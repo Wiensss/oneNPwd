@@ -2,9 +2,9 @@ import {
   throttle,
   parseJson,
   formatTime,
-  matchToken,
   decryptData,
-  findArrayIndex
+  findArrayIndex,
+  stringifyArray
 } from '../utils/util'
 import {
   tip,
@@ -15,6 +15,7 @@ import {
 } from '../utils/promisify'
 
 const $ = getApp()
+const viewCache = {}
 const themeBvr = require('../behaviors/theme')
 const commonBvr = require('../behaviors/common')
 const configBvr = require('../behaviors/config')
@@ -35,8 +36,10 @@ Component({
     isLogin: async function (state) {
       this.setData({
         userInfo: state ? await getUserInfo('userInfo') : null,
-        pwdList: state ? parseJson(wx.getStorageSync('pwdList')) : null
+        pwdList: state ? parseJson(wx.getStorageSync('pwdList')) : []
       })
+
+      this.data.pwdList.forEach(item => (viewCache[item.token] = item.view))
 
       console.log('[login state]: ', state)
       console.warn(state ? '已授权' : '未授权')
@@ -132,15 +135,20 @@ Component({
         .exec()
     },
 
+    onHide() {
+      this._updatePwdView()
+    },
+
     onPullDownRefresh() {
       if (!this.data.isLogin) return
 
       this.showLoading()
 
       try {
-        this.setData({
-          pwdList: parseJson(wx.getStorageSync('pwdList'))
-        })
+        const pwdList = parseJson(wx.getStorageSync('pwdList'))
+
+        if (!pwdList.length) tip({ msg: '暂无本地密码记录' })
+        else this.setData({ pwdList })
 
         wx.stopPullDownRefresh()
       } catch (err) {
@@ -293,15 +301,26 @@ Component({
       let { curItem } = this.data
 
       curItem = decryptData(curItem)
+
       curItem = {
         ...curItem,
         ...curItem.code,
+        view: ++viewCache[curItem.token],
+        cloud: formatTime(curItem.cloud),
         update: formatTime(curItem.update)
       }
 
       delete curItem['code']
 
       this.setData({ curItem })
+    },
+
+    _updatePwdView() {
+      const { pwdList } = this.data
+
+      pwdList.forEach(item => (item.view = viewCache[item.token] || item.view))
+
+      wx.setStorageSync('pwdList', stringifyArray(pwdList))
     },
 
     _EditPwd() {
