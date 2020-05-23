@@ -1,7 +1,7 @@
 {
 	"miniprogramRoot": "client/",
 	"cloudfunctionRoot": "server/",
-	"libVersion": "2.11.0",
+	"libVersion": "2.11.1",
 	"projectname": "ownNPwd",
 	"simulatorType": "wechat",
 	"appid": "wxda8515fa2987e0cb",

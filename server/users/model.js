@@ -45,8 +45,10 @@ const searchDoc = _id => {
  * @param {String} _id 微信唯一标识
  * @returns
  */
-const deleteDoc = _id => {
-  return collection.doc(_id).remove()
+const setDoc = _id => {
+  return collection.doc(_id).set({
+    data: { _flag: true }
+  })
 }
 
 /**
@@ -69,10 +71,8 @@ const addField = (_id, options) => {
  * @param {String} [token] 查询选项
  * @returns {Array} data
  */
-const getField = (_id, token = '') => {
-  let options = token ? { _id: 0, token: 1 } : { _id: 0 }
-
-  return collection.doc(_id).field(options).get()
+const getField = _id => {
+  return collection.doc(_id).field({ _id: 0, _flag: 0 }).get()
 }
 
 /**
@@ -93,7 +93,7 @@ const deleteField = (_id, token) => {
 module.exports = {
   addDoc,
   getDoc,
-  deleteDoc,
+  setDoc,
   searchDoc,
   addField,
   getField,

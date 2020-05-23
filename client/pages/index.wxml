@@ -88,6 +88,12 @@
     data="{{ state: 'Theme', target: theme, options: themeSelect, show: isTheme }}"
   />
 
+  <!-- 云同步 Select 模态框 -->
+  <template
+    is="select"
+    data="{{ state: 'Cloud', options: cloudSelect, show: isCloud }}"
+  />
+
   <!-- 清空 Select 模态框 -->
   <template
     is="select"
@@ -106,17 +112,41 @@
     data="{{ ...actionTip.offUpload, show: isOffUpload }}"
   />
 
+  <!-- 备份所有数据 Action 模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.cloudUpload, show: isCloudUpload }}"
+  />
+
+  <!-- 同步所有数据 Action 模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.cloudDownload, show: isCloudDownload }}"
+  />
+
   <!-- 删除 Action 模态框 -->
   <template
     is="actionTip"
     data="{{ ...actionTip.delete, show: isDelete }}"
   />
 
-  <!-- 清空 Action 模态框 -->
-  <!-- <template
+  <!-- 清空本地数据 Action 模态框 -->
+  <template
     is="actionTip"
-    data="{{ ...actionTip.clean, show: isClean }}"
-  />-->
+    data="{{ ...actionTip.cleanLocal, show: isCleanLocal }}"
+  />
+
+  <!-- 清空备份数据 Action 模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.cleanCloud, show: isCleanCloud }}"
+  />
+
+  <!-- 清空所有数据 Action 模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.cleanAll, show: isCleanAll }}"
+  />
 
   <!-- 关于我模态框 -->
   <template

@@ -19,17 +19,14 @@ exports.main = async event => {
     case 'upload':
       res = await model.addField(OPENID, options)
       break
-    case 'downloadOne':
-      res = model.getField(OPENID, token)
-      break
-    case 'downloadAll':
+    case 'download':
       res = model.getField(OPENID)
       break
     case 'removeOne':
       res = model.deleteField(OPENID, token)
       break
     case 'removeAll':
-      res = model.deleteDoc(OPENID)
+      res = model.setDoc(OPENID)
       break
   }
 

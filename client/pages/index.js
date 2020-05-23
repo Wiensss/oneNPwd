@@ -5,7 +5,8 @@ import {
   decryptData,
   coverToObject,
   parseFromArray,
-  stringifyFromArray
+  stringifyFromArray,
+  coverToObjectArray
 } from '../utils/util'
 import {
   tip,
@@ -75,9 +76,9 @@ Component({
         show: true
       },
       {
-        title: '关于我',
-        icon: 'github',
-        state: 'About',
+        title: '云同步',
+        icon: 'cloud',
+        state: 'Cloud',
         event: 'stateBus',
         show: true
       },
@@ -91,6 +92,12 @@ Component({
         title: '意见反馈',
         icon: 'lamp',
         openType: 'feedback'
+      },
+      {
+        title: '关于我',
+        icon: 'github',
+        state: 'About',
+        event: 'stateBus'
       }
     ],
     actionTip: {
@@ -110,11 +117,33 @@ Component({
         content: '确定删除该密码信息',
         tip: '将同时删除此记录的备份，若存在'
       },
-      clean: {
+      cleanLocal: {
         title: '清空',
-        state: 'Clean',
+        state: 'CleanLocal',
+        content: '确定清空所有本地数据',
+        tip: '此操作不可撤销，请谨慎操作'
+      },
+      cleanCloud: {
+        title: '清空',
+        state: 'CleanCloud',
+        content: '确定清空所有备份数据',
+        tip: '此操作不可撤销，请谨慎操作'
+      },
+      cleanAll: {
+        title: '清空',
+        state: 'CleanAll',
         content: '确定清空所有数据',
         tip: '此操作不可撤销，请谨慎操作'
+      },
+      cloudUpload: {
+        title: '备份',
+        state: 'CloudUpload',
+        content: '在云服务中备份所有密码记录'
+      },
+      cloudDownload: {
+        title: '同步',
+        state: 'CloudDownload',
+        content: '从云服务中同步所有密码记录'
       }
     },
     themeSelect: [
@@ -131,16 +160,28 @@ Component({
     ],
     cleanSelect: [
       {
-        type: 'local',
+        type: 'CleanLocal',
         name: '清空本地数据'
       },
       {
-        type: 'cloud',
+        type: 'CleanCloud',
         name: '清空备份数据'
       },
       {
-        type: 'all',
+        type: 'CleanAll',
         name: '清空所有数据'
+      }
+    ],
+    cloudSelect: [
+      {
+        type: 'CloudUpload',
+        icon: 'cloudup',
+        name: '备份所有数据'
+      },
+      {
+        type: 'CloudDownload',
+        icon: 'clouddown',
+        name: '同步所有数据'
       }
     ]
   },
@@ -205,7 +246,7 @@ Component({
       const { theme } = wx.getSystemInfoSync()
 
       return {
-        path: '/pages/main/index',
+        path: '/pages/index',
         imageUrl: this.data._shareUrls[theme],
         title: '🎈我在这儿记录密码，轻便易用，不再烦恼密码丢失❗❗'
       }
@@ -218,13 +259,13 @@ Component({
     selectBus({ currentTarget }) {
       const { state, type } = currentTarget.dataset
 
-      this[`_handle${state}`](type)
+      this[`_select${state}`](type)
     },
 
     actionBus({ currentTarget }) {
       const { state } = currentTarget.dataset
 
-      this[`_${state}Pwd`]()
+      this[`_action${state}`]()
     },
 
     bindCola() {
@@ -339,7 +380,7 @@ Component({
       else this.checkLogin(!id)
     },
 
-    async _UploadPwd() {
+    async _actionUpload() {
       const { _token, pwdList } = this.data
 
       this.showLoading()
@@ -373,7 +414,7 @@ Component({
       }
     },
 
-    async _OffUploadPwd() {
+    async _actionOffUpload() {
       const { _token, pwdList } = this.data
 
       this.showLoading()
@@ -407,7 +448,7 @@ Component({
       }
     },
 
-    async _DeletePwd() {
+    async _actionDelete() {
       const { _token, pwdList } = this.data
 
       this.showLoading()
@@ -438,27 +479,164 @@ Component({
       }
     },
 
-    _handleTheme(type) {
+    async _actionCleanCloud() {
+      // this.setData({ isDrawer: false })
+      const { pwdList } = this.data
+
+      this.showLoading()
+
+      try {
+        await wx.cloud.callFunction({
+          name: 'users',
+          data: { method: 'removeAll' }
+        })
+
+        pwdList.forEach(item => {
+          item.view = viewCache[item.token] || item.view
+          if (item.cloud) item.cloud = false
+        })
+
+        this._saveStoragePwd(pwdList)
+
+        tip({ msg: '清空所有备份数据成功' })
+
+        wx.startPullDownRefresh()
+      } catch (err) {
+        tip({ msg: '未知错误，清空失败' })
+        console.log(err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    async _actionCleanAll() {
+      // this.setData({ isDrawer: false })
+      this.showLoading()
+
+      try {
+        wx.removeStorageSync('pwdList')
+
+        await wx.cloud.callFunction({
+          name: 'users',
+          data: { method: 'removeAll' }
+        })
+
+        tip({ msg: '清空所有数据成功' })
+
+        this._fetchStoragePwd()
+      } catch (err) {
+        tip({ msg: '未知错误，清空失败' })
+        console.log(err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    _actionCleanLocal() {
+      // this.setData({ isDrawer: false })
+      this.showLoading()
+
+      try {
+        wx.removeStorageSync('pwdList')
+
+        tip({ msg: '清空所有本地数据成功' })
+
+        this._fetchStoragePwd()
+      } catch (err) {
+        tip({ msg: '未知错误，清空失败' })
+        console.log(err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    async _actionCloudUpload() {
+      const { pwdList } = this.data
+
+      this.showLoading()
+
+      try {
+        await wx.cloud.callFunction({
+          name: 'users',
+          data: {
+            method: 'upload',
+            options: coverToObjectArray(pwdList)
+          }
+        })
+
+        pwdList.forEach(item => {
+          item.view = viewCache[item.token] || item.view
+          item.cloud = true
+          item.update = +new Date()
+        })
+
+        this._saveStoragePwd(pwdList)
+        wx.startPullDownRefresh()
+
+        tip({ msg: '备份成功' })
+      } catch (err) {
+        tip({ msg: '未知错误，备份失败' })
+        console.log('[call cloud upload fail]: ', err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    async _actionCloudDownload() {
+      const { pwdList } = this.data
+
+      this.showLoading()
+
+      try {
+        let { result } = await wx.cloud.callFunction({
+          name: 'users',
+          data: { method: 'download' }
+        })
+
+        for (let [token, data] of Object.entries(result.data)) {
+          if (!pwdList.some(item => item.token === token)) {
+            data.view = 0
+            data.cloud = true
+            data.update = +new Date()
+            data.tag = JSON.parse(data.tag)
+            pwdList.push(data)
+          }
+        }
+
+        this._saveStoragePwd(pwdList)
+        wx.startPullDownRefresh()
+
+        tip({ msg: '同步成功' })
+      } catch (err) {
+        tip({ msg: '未知错误，同步失败' })
+        console.log('[call cloud download fail]: ', err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    _selectTheme(type) {
       if (type === this.data.theme) return
 
       this.setData({ isDrawer: false })
       this.triggerTheme(type)
     },
 
-    _handleClean(type) {
-      // 清空数据，根据 type: local\cloud\all
-      console.log(type)
+    _selectCloud(type) {
+      this.setData({
+        isCloud: false,
+        isDrawer: false,
+        [`is${type}`]: true
+      })
     },
 
-    // _CleanPwd() {
-    //   console.log('tap')
-    // },
-
-    // _cloudDelete() {},
-
-    // _getStoragePwd() {},
-
-    // _setStoragePwd() {},
+    _selectClean(type) {
+      this.setData({
+        isClean: false,
+        isDrawer: false,
+        [`is${type}`]: true
+      })
+    },
 
     _parsePwdInfo() {
       let { curItem } = this.data

@@ -117,8 +117,8 @@ const matchStorage = token => {
  * @returns Object
  */
 const coverToObject = (array, tokens) => {
-  if (!array instanceof Array) return []
-  if (array.length < 1) return []
+  if (!array instanceof Array) return {}
+  if (array.length < 1) return {}
 
   const res = {}
 
@@ -131,7 +131,36 @@ const coverToObject = (array, tokens) => {
         name: item.name,
         field: item.field,
         token: item.token,
-        account: item.account
+        account: item.account,
+        tag: JSON.stringify(item.tag)
+      })
+  )
+
+  return res
+}
+
+/**
+ * 封装对象数组
+ *
+ * @param {Array} array 目标数组
+ * @returns token {}
+ */
+const coverToObjectArray = array => {
+  if (!array instanceof Array) return {}
+  if (array.length < 1) return {}
+
+  const res = {}
+
+  array.forEach(
+    item =>
+      (res[`${item.token}`] = {
+        code: item.code,
+        mark: item.mark,
+        name: item.name,
+        field: item.field,
+        token: item.token,
+        account: item.account,
+        tag: JSON.stringify(item.tag)
       })
   )
 
@@ -196,6 +225,7 @@ export {
   matchIndex,
   matchStorage,
   coverToObject,
+  coverToObjectArray,
   parseFromArray,
   stringifyFromArray,
   filterEmptyArray
