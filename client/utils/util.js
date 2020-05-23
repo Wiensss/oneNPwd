@@ -82,12 +82,69 @@ const debounce = fn => {
 }
 
 /**
- * 解析 JSON 对象数组
+ * 根据 TOKEN 获取所在对象数组下标
+ *
+ * @param {Array} pwdList 目标数组
+ * @param {String} token 匹配选项
+ * @returns index, cloud
+ */
+const matchIndex = (pwdList, token) => {
+  let index = pwdList.findIndex(item => item.token === token)
+
+  return {
+    index,
+    cloud: pwdList[index]['cloud'] || false
+  }
+}
+
+/**
+ * 根据 TOKEN 匹配 Stoage
+ *
+ * @param {String} token 匹配选项
+ * @returns Object
+ */
+const matchStorage = token => {
+  const pwdList = wx.getStorageSync('pwdList') || []
+
+  return JSON.parse(pwdList.find(item => JSON.parse(item)['token'] === token))
+}
+
+/**
+ * 根据 Token 封装对象
+ *
+ * @param {Array} array 目标数组
+ * @param {String} token 匹配选项
+ * @returns Object
+ */
+const coverToObject = (array, tokens) => {
+  if (!array instanceof Array) return []
+  if (array.length < 1) return []
+
+  const res = {}
+
+  array = array.filter(item => tokens.some(token => token === item.token))
+  array.forEach(
+    item =>
+      (res[`${item.token}`] = {
+        code: item.code,
+        mark: item.mark,
+        name: item.name,
+        field: item.field,
+        token: item.token,
+        account: item.account
+      })
+  )
+
+  return res
+}
+
+/**
+ * 解析对象数组
  *
  * @param {Array} array 目标数组
  * @returns {Array} Object
  */
-const parseJson = array => {
+const parseFromArray = array => {
   if (!array instanceof Array) return []
   if (array.length < 1) return []
 
@@ -100,60 +157,11 @@ const parseJson = array => {
  * @param {Array} array 目标数组
  * @returns {Array} Object
  */
-const stringifyArray = array => {
+const stringifyFromArray = array => {
   if (!array instanceof Array) return []
   if (array.length < 1) return []
 
   return array.map(item => JSON.stringify(item))
-}
-
-/**
- * 根据 Token 匹配对象数组元素
- *
- * @param {Array} array 目标 JSON 数组
- * @param {String} token 匹配选项
- * @returns Object
- */
-const matchToken = (array, token) => {
-  if (!array instanceof Array) return []
-  if (array.length < 1) return []
-
-  return array.find(item => JSON.parse(item)['token'] === token)
-}
-
-/**
- * 更新对象数组
- *
- * @param {Array} array 目标 JSON 数组
- * @param {String} token 匹配条件
- * @param {Object} data 更新选项
- * @return {Array} String
- */
-const updateArray = (array, token, data) => {
-  if (!array instanceof Array) return []
-  if (array.length < 1) return []
-
-  return array.map(item => {
-    return JSON.parse(item)['token'] === token
-      ? JSON.stringify(data)
-      : JSON.stringify(item)
-  })
-}
-
-/**
- * 根据 KEY 查询对象数组下标及字段
- *
- * @param {Array} array 目标对象数组
- * @param {String} key 查询条件
- * @returns Object
- */
-const findArrayIndex = (array, key) => {
-  let index = array.findIndex(item => item.token === key)
-
-  return {
-    index,
-    cloud: array[index]['cloud']
-  }
 }
 
 /**
@@ -180,15 +188,15 @@ const filterEmptyArray = (array, key1, key2) => {
 
 export {
   md5,
-  throttle,
-  debounce,
-  parseJson,
-  formatTime,
-  matchToken,
   decryptData,
   encryptData,
-  updateArray,
-  stringifyArray,
-  findArrayIndex,
+  throttle,
+  debounce,
+  formatTime,
+  matchIndex,
+  matchStorage,
+  coverToObject,
+  parseFromArray,
+  stringifyFromArray,
   filterEmptyArray
 }

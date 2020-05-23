@@ -1,3 +1,5 @@
+<c-loading show="{{ isLoading }}" />
+
 <view class="{{ theme }} container">
   <view class="wrapper">
     <!-- 类型选项 -->

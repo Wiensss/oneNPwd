@@ -34,14 +34,14 @@
       >
         <view
           class="slideview_btn"
-          style="background: {{item.bgColor }}"
+          style="background: {{bgColor }}"
           data-index="{{ index }}"
           data-data="{{ item.data }}"
           bindtap="{{ handler.hideButton }}"
         >
           <c-icon
+            color="{{ color }}"
             name="{{ item.icon }}"
-            color="{{ item.color }}"
           />
         </view>
       </view>

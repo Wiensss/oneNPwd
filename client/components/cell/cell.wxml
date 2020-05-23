@@ -1,6 +1,8 @@
 <c-slideview
   icon
   buttons="{{ buttons }}"
+  color="{{ tag.color ? tag.color : 'var(--BG-2)' }}"
+  bgColor="{{ tag.bgColor ? tag.bgColor : 'var(--PINK)' }}"
   bind:buttontap="onTap"
 >
   <view

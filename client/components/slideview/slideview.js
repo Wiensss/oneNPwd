@@ -9,6 +9,14 @@ Component({
       type: String,
       value: ''
     },
+    color: {
+      type: String,
+      value: 'var(--BG-2)'
+    },
+    bgColor: {
+      type: String,
+      value: 'var(--PINK)'
+    },
     buttons: {
       type: Array,
       value: [],

@@ -14,62 +14,34 @@ Component({
     },
     tag: {
       type: Object,
-      value: {},
-      observer: 'bindButton'
+      value: {}
     },
     cloud: {
-      type: Number,
-      value: 0
+      type: Boolean,
+      value: false
     }
   },
 
-  data: {
-    buttons: [
-      {
-        data: 'Upload',
-        icon: 'cloudup',
-        color: 'var(--BG-2)',
-        bgColor: 'var(--PINK)'
-      },
-      {
-        data: 'Edit',
-        icon: 'edit',
-        color: 'var(--BG-2)',
-        bgColor: 'var(--PINK)'
-      },
-      {
-        data: 'Delete',
-        icon: 'delete',
-        color: 'var(--BG-2)',
-        bgColor: 'var(--PINK)'
-      }
-    ]
+  attached() {
+    this.setData({
+      buttons: [
+        {
+          data: this.data.cloud ? 'OffUpload' : 'Upload',
+          icon: this.data.cloud ? 'cloudoff' : 'cloudup'
+        },
+        {
+          data: 'Edit',
+          icon: 'edit'
+        },
+        {
+          data: 'Delete',
+          icon: 'delete'
+        }
+      ]
+    })
   },
 
   methods: {
-    bindButton(tag) {
-      if (tag.name)
-        this.setData({
-          buttons: [
-            {
-              icon: 'cloudup',
-              color: tag.color,
-              bgColor: tag.bgColor
-            },
-            {
-              icon: 'edit',
-              color: tag.color,
-              bgColor: tag.bgColor
-            },
-            {
-              icon: 'delete',
-              color: tag.color,
-              bgColor: tag.bgColor
-            }
-          ]
-        })
-    },
-
     onTap({ detail }) {
       this.triggerEvent('click', detail, {})
     }

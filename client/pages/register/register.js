@@ -3,10 +3,9 @@ import {
   md5,
   throttle,
   debounce,
-  matchToken,
   decryptData,
   encryptData,
-  updateArray,
+  matchStorage,
   filterEmptyArray
 } from '../../utils/util'
 
@@ -35,22 +34,7 @@ Component({
 
   observers: {
     isOpen: function (flag) {
-      if (flag) return
-
-      const { account, accountMap, _pwdInfo } = this.data
-      const options = {
-        phone: _pwdInfo['phone'] || '',
-        email: _pwdInfo['email'] || ''
-      }
-
-      delete options[accountMap[account]['key']]
-
-      this.setData({
-        num: _pwdInfo['num'] || 0,
-        tag: _pwdInfo['tag'] || {},
-        mark: _pwdInfo['mark'] || '',
-        ...options
-      })
+      if (!flag) this._resetOptional()
     },
     field: function () {
       if (this.data.fieldError) this.setData({ fieldError: false })
@@ -71,8 +55,8 @@ Component({
     mark: '',
     num: 0,
     account: 0,
-    _pwdInfo: {},
     options: [],
+    _pwdInfo: {},
     accountMap: [
       { key: 'name', value: '帐号名称' },
       { key: 'phone', value: '手机号码' },
@@ -151,22 +135,27 @@ Component({
       }
 
       const {
+        _type,
+        _token,
         mark,
         field,
+        account,
         options,
         password,
         tag = {},
         view = 0,
-        cloud = 0,
         name = '',
         email = '',
-        phone = ''
+        phone = '',
+        cloud = false
       } = this.data
 
       const pwdData = {
-        tag: tag || {},
-        view: view || 0,
-        cloud: cloud || 0,
+        tag,
+        view,
+        cloud,
+        account,
+        token: _token,
         mark: mark.trim(),
         name: name.trim(),
         field: field.trim(),
@@ -179,6 +168,8 @@ Component({
         }
       }
 
+      if (_type === 'add') pwdData.token = md5(pwdData)
+
       this._savePwdInfo(pwdData)
     }),
 
@@ -190,6 +181,7 @@ Component({
         field,
         email,
         phone,
+        account,
         options,
         password
       } = this.data._pwdInfo
@@ -197,17 +189,36 @@ Component({
       this.setData({
         isPlus: false,
         isMinus: true,
+        isSelect: false,
+        account,
         tag: tag || {},
         mark: mark || '',
         name: name || '',
         email: email || '',
         field: field || '',
         phone: phone || '',
-        options: options || [],
         password: password || '',
-        num: options.length || 0
+        num: options.length || 0,
+        options: JSON.parse(JSON.stringify(options)) || []
       })
     }),
+
+    _resetOptional() {
+      const { account, accountMap, _pwdInfo } = this.data
+      const options = {
+        phone: _pwdInfo['phone'] || '',
+        email: _pwdInfo['email'] || ''
+      }
+
+      delete options[accountMap[account]['key']]
+
+      this.setData({
+        num: _pwdInfo['num'] || 0,
+        tag: _pwdInfo['tag'] || {},
+        mark: _pwdInfo['mark'] || '',
+        ...options
+      })
+    },
 
     _updateOptions(field) {
       const { options } = this.data
@@ -255,47 +266,72 @@ Component({
     },
 
     _parsePwdInfo() {
-      let _pwdInfo = matchToken(wx.getStorageSync('pwdList'), this.data._token)
+      let _pwdInfo = matchStorage(this.data._token)
 
       _pwdInfo = {
         ..._pwdInfo,
-        ...decryptData(pwdInfo)
+        ...decryptData(_pwdInfo)['code']
       }
 
       delete _pwdInfo.code
-
-      console.log('[_pwdInfo]: ', _pwdInfo)
+      delete _pwdInfo.token
 
       this.setData({
         ..._pwdInfo,
         _pwdInfo,
-        num: _pwdInfo.options.length
+        isOpen: true,
+        num: _pwdInfo.options.length,
+        options: JSON.parse(JSON.stringify(_pwdInfo.options))
       })
     },
 
-    _savePwdInfo(pwdData) {
+    async _savePwdInfo(pwdData) {
+      this.showLoading()
+
       try {
-        const { _type, _token } = this.data
+        pwdData.code = encryptData(pwdData)
+
+        if (pwdData.cloud)
+          await wx.cloud.callFunction({
+            name: 'users',
+            data: {
+              method: 'upload',
+              options: {
+                [`${pwdData.token}`]: {
+                  code: pwdData.code,
+                  mark: pwdData.mark,
+                  name: pwdData.name,
+                  field: pwdData.field,
+                  token: pwdData.token,
+                  account: pwdData.account
+                }
+              }
+            }
+          })
 
         let pwdList = wx.getStorageSync('pwdList') || []
 
-        pwdData.token = md5(pwdData)
-        pwdData.code = encryptData(pwdData)
-
-        if (_type === 'add') pwdList.push(JSON.stringify(pwdData))
-        else pwdList = updateArray(pwdList, _token, pwdData)
+        if (this.data._type === 'add') pwdList.push(JSON.stringify(pwdData))
+        else
+          pwdList = pwdList.map(item => {
+            return JSON.parse(item)['token'] === pwdData.token
+              ? JSON.stringify(pwdData)
+              : item
+          })
 
         wx.setStorageSync('pwdList', pwdList)
 
         tip({ type: 'success', msg: '保存成功' })
 
         setTimeout(() => {
-          wx.navigateBack({ delta: 2 })
           this.getOpenerEventChannel().emit('registerDone')
+          wx.navigateBack({ delta: 2 })
         }, 600)
       } catch (err) {
         tip({ msg: '未知错误, 请稍后重试！' })
         console.log('[call _savePwdInfo fail]: ', err)
+      } finally {
+        this.hideLoading()
       }
     }
   }

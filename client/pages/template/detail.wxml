@@ -159,15 +159,17 @@
           <view class="flex-inline flex-row-center width-55r">
             <c-icon
               color
-              name="view"
+              name="see"
             />
           </view>
         </view>
 
         <!-- 更新于 -->
         <view class="flex flex-row-between flex-col-center padding-ver-s">
-          <text class="min-width-150r">更新于</text>
-          <view class="block-inline padding-right text-s text-italic">{{ curItem.update }}</view>
+          <text class="min-width-150r">更新时间</text>
+          <view
+            class="flex-item flex-inline flex-row-end padding-right text-s text-italic"
+          >{{ curItem.update }}</view>
           <view class="flex-inline flex-row-center width-55r">
             <c-icon
               color
@@ -178,13 +180,13 @@
 
         <!-- 备份状态 -->
         <view class="flex flex-row-between flex-col-center padding-ver-s">
-          <text class="min-width-150r">{{ curItem.cloud ? '备份于' : '备份状态' }}</text>
+          <text class="min-width-150r">备份状态</text>
           <view
-            class="block-inline padding-right text-s text-italic"
-          >{{ curItem.cloud ? curItem.cloud : '(未备份)' }}</view>
+            class="flex-item flex-inline flex-row-end padding-right text-s text-italic"
+          >{{ curItem.cloud ? '(已备份)' : '(未备份)' }}</view>
           <view class="flex-inline flex-row-center width-55r">
             <c-icon
-              name="cloudcheck"
+              name="cloudstate"
               color="{{ curItem.cloud ? 'var(--PINK)' : '' }}"
             />
           </view>

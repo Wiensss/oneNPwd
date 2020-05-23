@@ -1,3 +1,23 @@
+<template name="item">
+  <view
+    class="relative drawer-item"
+    hover-class="bg-opacity"
+    data-state="{{ state }}"
+    catch:tap="{{ event }}"
+  >
+    <c-icon
+      name="{{ icon }}"
+      color="var(--BTN-TEXT)"
+    />
+    {{ title }}
+    <button
+      class="opacity-btn"
+      wx:if="{{ openType }}"
+      open-type="{{ openType }}"
+    />
+  </view>
+</template>
+
 <template name="drawer">
   <c-drawer
     data-state="Drawer"
@@ -8,25 +28,40 @@
       <block
         wx:for="{{ drawerItem }}"
         wx:key="title"
+        wx:if="{{ item.show }}"
       >
-        <view
-          class="relative drawer-item"
-          hover-class="bg-opacity"
-          data-state="{{ item.state }}"
-          catch:tap="{{ item.event }}"
-        >
-          <c-icon
-            name="{{ item.icon }}"
-            color="var(--BTN-TEXT)"
-          />
-          {{ item.title }}
-          <button
-            class="opacity-btn"
-            wx:if="{{ item.openType }}"
-            open-type="{{ item.openType }}"
-          />
-        </view>
+        <template
+          is="item"
+          data="{{ ...item }}"
+        />
       </block>
+
+      <view
+        data-state="Open"
+        class="flex flex-row-center {{ isOpen ? 'bg-opacity' : '' }}"
+        catch:tap="stateBus"
+      >
+        <c-icon
+          name="{{ isOpen ? 'up' : 'down' }}"
+          class="{{ isOpen ? '' : 'animate-shake-y' }}"
+        />
+      </view>
+
+      <view
+        wx:if="{{ isOpen }}"
+        class="animate-fadein-up"
+      >
+        <block
+          wx:for="{{ drawerItem }}"
+          wx:key="title"
+          wx:if="{{ !item.show }}"
+        >
+          <template
+            is="item"
+            data="{{ ...item }}"
+          />
+        </block>
+      </view>
     </view>
   </c-drawer>
 </template>

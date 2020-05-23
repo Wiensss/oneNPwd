@@ -6,7 +6,7 @@
     data-state="{{ state }}"
     catch:close="stateBus"
     catch:cancel="stateBus"
-    catch:confirm="handeAction"
+    catch:confirm="actionBus"
   >
     <view class="flex-col flex-center padding-level-l">
       <view>{{ content }}❓</view>

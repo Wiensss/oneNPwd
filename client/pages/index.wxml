@@ -1,7 +1,7 @@
 <import src="./template/about.wxml" />
-<import src="./template/theme.wxml" />
 <import src="./template/detail.wxml" />
 <import src="./template/drawer.wxml" />
+<import src="./template/select.wxml" />
 <import src="./template/actionTip.wxml" />
 
 <c-loading show="{{ isLoading }}" />
@@ -33,20 +33,22 @@
   <!-- 主内容 -->
   <view class="wrapper">
     <block
-      wx:if="{{ userInfo }}"
+      wx:if="{{ !isRefresh && userInfo }}"
       wx:for="{{ pwdList }}"
       wx:key="token"
     >
-      <c-cell
-        color="var(--TEXT-0)"
-        bg-color="var(--BG-2)"
-        tag="{{ item.tag }}"
-        cloud="{{ item.cloud }}"
-        title="{{ item.field }}"
-        data-token="{{ item.token }}"
-        catch:tap="bindDetail"
-        catch:click="bindAction"
-      />
+      <view class="animate-fadein-left">
+        <c-cell
+          color="var(--TEXT-0)"
+          bg-color="var(--BG-2)"
+          tag="{{ item.tag }}"
+          cloud="{{ item.cloud }}"
+          title="{{ item.field }}"
+          data-token="{{ item.token }}"
+          catch:tap="bindDetail"
+          catch:click="bindAction"
+        />
+      </view>
     </block>
   </view>
 
@@ -71,7 +73,7 @@
   <!-- 抽屉 -->
   <template
     is="drawer"
-    data="{{ drawerItem, show: isDrawer }}"
+    data="{{ isOpen, drawerItem, show: isDrawer }}"
   />
 
   <!-- 密码详细项模态框 -->
@@ -80,23 +82,41 @@
     data="{{ isTip, isSafe, isDetail, isQuestion, numMap, curItem }}"
   />
 
-  <!-- 上传模态框 -->
+  <!-- 主题 Select 模态框 -->
+  <template
+    is="select"
+    data="{{ state: 'Theme', target: theme, options: themeSelect, show: isTheme }}"
+  />
+
+  <!-- 清空 Select 模态框 -->
+  <template
+    is="select"
+    data="{{ state: 'Clean', options: cleanSelect, hover: true, show: isClean }}"
+  />
+
+  <!-- 备份 Action 模态框 -->
   <template
     is="actionTip"
     data="{{ ...actionTip.upload, show: isUpload }}"
   />
 
-  <!-- 删除模态框 -->
+  <!-- 取消备份 Action 模态框 -->
+  <template
+    is="actionTip"
+    data="{{ ...actionTip.offUpload, show: isOffUpload }}"
+  />
+
+  <!-- 删除 Action 模态框 -->
   <template
     is="actionTip"
     data="{{ ...actionTip.delete, show: isDelete }}"
   />
 
-  <!-- 主题模态框 -->
-  <template
-    is="theme"
-    data="{{ theme, themeType, show: isTheme }}"
-  />
+  <!-- 清空 Action 模态框 -->
+  <!-- <template
+    is="actionTip"
+    data="{{ ...actionTip.clean, show: isClean }}"
+  />-->
 
   <!-- 关于我模态框 -->
   <template

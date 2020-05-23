@@ -1,10 +1,11 @@
 import {
   throttle,
-  parseJson,
   formatTime,
+  matchIndex,
   decryptData,
-  findArrayIndex,
-  stringifyArray
+  coverToObject,
+  parseFromArray,
+  stringifyFromArray
 } from '../utils/util'
 import {
   tip,
@@ -33,16 +34,18 @@ Component({
     isSafe: function (state) {
       state && this._parsePwdInfo()
     },
+    isDrawer: function (state) {
+      !state && this.setData({ isOpen: false })
+    },
     isDetail: function (state) {
       !state && this.setData({ isQuestion: false })
     },
     isLogin: async function (state) {
       this.setData({
-        userInfo: state ? await getUserInfo('userInfo') : null,
-        pwdList: state ? parseJson(wx.getStorageSync('pwdList')) : []
+        userInfo: state ? await getUserInfo('userInfo') : null
       })
 
-      this.data.pwdList.forEach(item => (viewCache[item.token] = item.view))
+      state && this._fetchStoragePwd()
 
       console.log('[login state]: ', state)
       console.warn(state ? '已授权' : '未授权')
@@ -51,58 +54,95 @@ Component({
 
   data: {
     userInfo: null,
-    themeType: [
-      {
-        type: 'light',
-        name: '亮色模式'
-      },
-      {
-        type: 'dark',
-        name: '深色模式'
-      }
-    ],
     drawerItem: [
       {
         title: '切换主题',
         icon: 'theme',
         state: 'Theme',
-        event: 'stateBus'
+        event: 'stateBus',
+        show: true
       },
       {
         title: '转发分享',
         icon: 'share',
-        openType: 'share'
+        openType: 'share',
+        show: true
       },
       {
         title: '赞赏支持',
         icon: 'heart',
-        event: 'bindCola'
-      },
-      {
-        title: '意见反馈',
-        icon: 'lamp',
-        openType: 'feedback'
+        event: 'bindCola',
+        show: true
       },
       {
         title: '关于我',
         icon: 'github',
         state: 'About',
+        event: 'stateBus',
+        show: true
+      },
+      {
+        title: '清空数据',
+        icon: 'clean',
+        state: 'Clean',
         event: 'stateBus'
+      },
+      {
+        title: '意见反馈',
+        icon: 'lamp',
+        openType: 'feedback'
       }
     ],
     actionTip: {
       upload: {
         title: '备份',
         state: 'Upload',
-        content: '确定备份该密码记录'
+        content: '确定在云服务中备份该密码记录'
+      },
+      offUpload: {
+        title: '取消备份',
+        state: 'OffUpload',
+        content: '确定取消备份该密码记录'
       },
       delete: {
         title: '删除',
         state: 'Delete',
         content: '确定删除该密码信息',
         tip: '将同时删除此记录的备份，若存在'
+      },
+      clean: {
+        title: '清空',
+        state: 'Clean',
+        content: '确定清空所有数据',
+        tip: '此操作不可撤销，请谨慎操作'
       }
-    }
+    },
+    themeSelect: [
+      {
+        type: 'light',
+        icon: 'sun',
+        name: '亮色模式'
+      },
+      {
+        type: 'dark',
+        icon: 'moon',
+        name: '深色模式'
+      }
+    ],
+    cleanSelect: [
+      {
+        type: 'local',
+        name: '清空本地数据'
+      },
+      {
+        type: 'cloud',
+        name: '清空备份数据'
+      },
+      {
+        type: 'all',
+        name: '清空所有数据'
+      }
+    ]
   },
 
   methods: {
@@ -112,7 +152,7 @@ Component({
         navBarHeight: $.store.navBarHeight + 'px'
       })
 
-      if (!this.data.isLogin && (await checkScope())) this.checkLogin()
+      if (!this.data.isLogin) (await checkScope()) && this.checkLogin()
     },
 
     async onShow() {
@@ -121,7 +161,7 @@ Component({
         return
       }
 
-      if (!(await checkScope())) this.setData({ isLogin: false })
+      !(await checkScope()) && this.setData({ isLogin: false })
     },
 
     onReady() {
@@ -137,25 +177,27 @@ Component({
 
     onHide() {
       this._updatePwdView()
+      this._fetchStoragePwd()
     },
 
     onPullDownRefresh() {
-      if (!this.data.isLogin) return
+      const { isLogin, pwdList } = this.data
 
-      this.showLoading()
+      if (!isLogin) return
 
       try {
-        const pwdList = parseJson(wx.getStorageSync('pwdList'))
+        this.setData({ isRefresh: true })
+
+        this._fetchStoragePwd()
 
         if (!pwdList.length) tip({ msg: '暂无本地密码记录' })
-        else this.setData({ pwdList })
 
         wx.stopPullDownRefresh()
       } catch (err) {
-        tip({ msg: '未知错误，刷新失败！' })
+        tip({ msg: '未知错误，刷新失败' })
         console.log(err)
       } finally {
-        this.hideLoading()
+        this.setData({ isRefresh: false })
       }
     },
 
@@ -171,6 +213,18 @@ Component({
 
     showSafe() {
       this.setData({ isSafe: true })
+    },
+
+    selectBus({ currentTarget }) {
+      const { state, type } = currentTarget.dataset
+
+      this[`_handle${state}`](type)
+    },
+
+    actionBus({ currentTarget }) {
+      const { state } = currentTarget.dataset
+
+      this[`_${state}Pwd`]()
     },
 
     bindCola() {
@@ -190,13 +244,8 @@ Component({
         })
     },
 
-    bindTheme({ currentTarget }) {
-      const { type } = currentTarget.dataset
-
-      if (type === this.data.theme) return
-
-      this.setData({ isDrawer: false })
-      this.triggerTheme(type)
+    bindClean(e) {
+      console.log(e)
     },
 
     bindDetail({ currentTarget }) {
@@ -212,11 +261,11 @@ Component({
     },
 
     bindAction({ detail, currentTarget }) {
-      const { index, data } = detail
+      const { data } = detail
       const { token } = currentTarget.dataset
 
-      if (index === 1) {
-        this._EditPwd(token)
+      if (data === 'Edit') {
+        this.toRegister('edit', token)
         return
       }
 
@@ -226,11 +275,14 @@ Component({
       })
     },
 
-    handeAction({ currentTarget }) {
-      const { state } = currentTarget.dataset
-
-      this[`_${state}Pwd`]()
-    },
+    toRegister: throttle(function (type = 'add', token = '') {
+      wx.navigateTo({
+        url: `/pages/register/register?_type=${type}&_token=${token}`,
+        events: {
+          registerDone: () => this._fetchStoragePwd()
+        }
+      })
+    }),
 
     async checkLogin(register = false) {
       this.showLoading()
@@ -252,8 +304,8 @@ Component({
 
         if (register) this.toRegister()
       } catch (err) {
-        tip({ msg: '未知错误，登录失败！' })
-        console.log(err)
+        tip({ msg: '未知错误，登录失败' })
+        console.log('[call cloud login fail]: ', err)
       } finally {
         this.hideLoading()
       }
@@ -273,7 +325,7 @@ Component({
 
         this.setData({ isDetail: false })
 
-        tip({ msg: '尝试调用设备指纹认证，未知错误，请重试！' })
+        tip({ msg: '尝试调用设备指纹认证，未知错误，请重试' })
       }
     },
 
@@ -283,35 +335,142 @@ Component({
 
       if (!userInfo) return
 
-      if (this.data.isLogin && !id) this.toRegister()
+      if (this.data.isLogin) !id && this.toRegister()
       else this.checkLogin(!id)
     },
 
-    toRegister: throttle(function (type = 'add', token = '') {
-      wx.navigateTo({
-        url: `/pages/register/register?_type=${type}&_token=${token}`,
-        events: {
-          registerDone: () => {
-            wx.startPullDownRefresh()
+    async _UploadPwd() {
+      const { _token, pwdList } = this.data
+
+      this.showLoading()
+
+      try {
+        await wx.cloud.callFunction({
+          name: 'users',
+          data: {
+            method: 'upload',
+            options: coverToObject(pwdList, [_token])
           }
-        }
-      })
-    }),
+        })
+
+        pwdList.forEach(item => {
+          item.view = viewCache[item.token] || item.view
+          if (item.token === _token) {
+            item.cloud = true
+            item.update = +new Date()
+          }
+        })
+
+        this._saveStoragePwd(pwdList)
+        wx.startPullDownRefresh()
+
+        tip({ msg: '备份成功' })
+      } catch (err) {
+        tip({ msg: '未知错误，备份失败' })
+        console.log('[call cloud upload fail]: ', err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    async _OffUploadPwd() {
+      const { _token, pwdList } = this.data
+
+      this.showLoading()
+
+      try {
+        await wx.cloud.callFunction({
+          name: 'users',
+          data: {
+            method: 'removeOne',
+            token: _token
+          }
+        })
+
+        pwdList.forEach(item => {
+          item.view = viewCache[item.token] || item.view
+          if (item.token === _token) {
+            item.cloud = false
+            item.update = +new Date()
+          }
+        })
+
+        this._saveStoragePwd(pwdList)
+        wx.startPullDownRefresh()
+
+        tip({ msg: '取消备份成功' })
+      } catch (err) {
+        tip({ msg: '未知错误，备份失败' })
+        console.log('[call cloud removeOne fail]: ', err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    async _DeletePwd() {
+      const { _token, pwdList } = this.data
+
+      this.showLoading()
+
+      try {
+        const { index, cloud } = matchIndex(pwdList, _token)
+
+        if (cloud)
+          await wx.cloud.callFunction({
+            name: 'users',
+            data: {
+              method: 'removeOne',
+              token: _token
+            }
+          })
+
+        if (index !== -1) pwdList.splice(index, 1)
+
+        this._saveStoragePwd(pwdList)
+        wx.startPullDownRefresh()
+
+        tip({ msg: '删除成功' })
+      } catch (err) {
+        tip({ msg: '未知错误，删除失败' })
+        console.log('[call cloud removeOne fail]', err)
+      } finally {
+        this.hideLoading()
+      }
+    },
+
+    _handleTheme(type) {
+      if (type === this.data.theme) return
+
+      this.setData({ isDrawer: false })
+      this.triggerTheme(type)
+    },
+
+    _handleClean(type) {
+      // 清空数据，根据 type: local\cloud\all
+      console.log(type)
+    },
+
+    // _CleanPwd() {
+    //   console.log('tap')
+    // },
+
+    // _cloudDelete() {},
+
+    // _getStoragePwd() {},
+
+    // _setStoragePwd() {},
 
     _parsePwdInfo() {
       let { curItem } = this.data
 
-      curItem = decryptData(curItem)
-
       curItem = {
         ...curItem,
-        ...curItem.code,
+        ...decryptData(curItem)['code'],
         view: ++viewCache[curItem.token],
-        cloud: formatTime(curItem.cloud),
         update: formatTime(curItem.update)
       }
 
-      delete curItem['code']
+      delete curItem.code
 
       this.setData({ curItem })
     },
@@ -321,42 +480,19 @@ Component({
 
       pwdList.forEach(item => (item.view = viewCache[item.token] || item.view))
 
-      wx.setStorageSync('pwdList', stringifyArray(pwdList))
+      this._saveStoragePwd(pwdList)
     },
 
-    _EditPwd() {
-      const { _token } = this.data
-      console.log('[edit pwd]: ', _token)
+    _fetchStoragePwd() {
+      const pwdList = parseFromArray(wx.getStorageSync('pwdList'))
+
+      pwdList.forEach(item => (viewCache[item.token] = item.view))
+
+      this.setData({ pwdList })
     },
 
-    _DeletePwd() {
-      const { _token, pwdList } = this.data
-      const { index, cloud } = findArrayIndex(pwdList, _token)
-
-      if (index !== -1) {
-        this.showLoading()
-        try {
-          pwdList.splice(index, 1)
-
-          this.setData({ pwdList })
-
-          if (cloud) this._cloudDelete()
-        } catch (err) {
-          tip({ msg: '未知错误，删除失败！' })
-        } finally {
-          this.hideLoading()
-        }
-      } else tip({ msg: '删除失败，请稍后重试！' })
-    },
-
-    _UploadPwd() {
-      const { _token } = this.data
-      // 检查是否在数据库已有记录
-      // 有，直接调用上传
-      // 无，创建用户记录，返回
-      console.log('[upload pwd]: ', _token)
-    },
-
-    _cloudDelete() {}
+    _saveStoragePwd(pwdList = []) {
+      wx.setStorageSync('pwdList', stringifyFromArray(pwdList))
+    }
   }
 })

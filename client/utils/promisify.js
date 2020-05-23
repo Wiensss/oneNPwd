@@ -10,8 +10,8 @@ const tip = ({ msg, type = 'none', duration = 1500, mask = false }) => {
 const checkScope = () => {
   return new Promise((resolve, reject) => {
     wx.getSetting({
-      success: res => resolve(res.authSetting['scope.userInfo']),
-      fail: err => reject(err)
+      success: res => resolve(!!res.authSetting['scope.userInfo']),
+      fail: () => resolve(false)
     })
   })
 }

@@ -6,34 +6,30 @@ const model = require('./model')
 
 exports.main = async event => {
   const { OPENID } = cloud.getWXContext()
-  const { method } = event
+  const { method, options, token } = event
 
   let res = null
 
   switch (method) {
     case 'login':
-      if ((await model.searchOne(OPENID))['total'])
-        res = (await model.getOne(OPENID))['data'][0]
-      else res = await model.addOne(OPENID)
+      if ((await model.searchDoc(OPENID))['total'])
+        res = (await model.getDoc(OPENID))['data'][0]
+      else res = await model.addDoc(OPENID)
       break
-    case 'createUser':
-      res = model.addOne()
+    case 'upload':
+      res = await model.addField(OPENID, options)
       break
-    case 'deleteUser':
+    case 'downloadOne':
+      res = model.getField(OPENID, token)
       break
-    case 'getUser':
+    case 'downloadAll':
+      res = model.getField(OPENID)
       break
-    case 'updateUser':
+    case 'removeOne':
+      res = model.deleteField(OPENID, token)
       break
-    case 'insertOnePwdInfo':
-      break
-    case 'updatePwdInfo':
-      break
-    case 'getPwdInfoList':
-      break
-    case 'deletePwdInfo':
-      break
-    case 'removePwdInfo':
+    case 'removeAll':
+      res = model.deleteDoc(OPENID)
       break
   }
 
