@@ -10,10 +10,11 @@
   margin: 30rpx 10rpx;
   padding: 20rpx;
   border-radius: 20rpx;
-  background: var(--BTN-BG);
-  color: var(--BTN-TEXT);
+  background: var(--BG-btn);
+  color: var(--FG-btn);
   font-size: 30rpx;
   font-weight: bold;
+  box-shadow: 6rpx 6rpx 8rpx rgba(0, 0, 0, 0.15);
 }
 
 .fixed-bottom {
@@ -32,14 +33,14 @@
   bottom: 0;
   height: 60rpx;
   width: 100%;
-  background: var(--BG-0);
+  background: var(--BG-main);
 }
 
 .fixed-button {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: var(--BG-0);
+  background: var(--BG-main);
 }
 
 .detail-mark {
@@ -48,10 +49,10 @@
   padding: 20rpx;
   width: 100%;
   font-size: 28rpx;
-  color: var(--TEXT-0);
+  color: var(--FG-main);
   word-break: break-all;
   border-radius: 10rpx;
-  background: var(--BG-2);
+  background: var(--BG-minor);
   opacity: 0.7;
 }
 

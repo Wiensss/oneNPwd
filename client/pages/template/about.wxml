@@ -8,7 +8,7 @@
     <view class="padding-level-l padding-bottom-s text-main text-s">
       <view class="flex flex-row-center">
         <image
-          src="{{ avatar }}"
+          src="cloud://onen-pwd.6f6e-onen-pwd-1302122430/mini/spaceman.jpg"
           mode="widthFix"
           class="width-150r radius-round animate-rotate"
         />

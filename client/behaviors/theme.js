@@ -20,7 +20,7 @@ module.exports = Behavior({
     renderTheme(theme) {
       wx.setNavigationBarColor({
         frontColor: theme === 'dark' ? '#ffffff' : '#000000',
-        backgroundColor: theme === 'dark' ? '#050505' : '#ffffff'
+        backgroundColor: theme === 'dark' ? '#0a0a0a' : '#f5f5f5'
       })
     },
 

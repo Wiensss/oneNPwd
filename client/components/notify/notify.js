@@ -11,7 +11,7 @@ Component({
     },
     time: {
       type: String,
-      value: ''
+      value: '0'
     },
     bgColor: {
       type: String,

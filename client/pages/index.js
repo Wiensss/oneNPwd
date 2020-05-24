@@ -18,9 +18,10 @@ import {
 
 const $ = getApp()
 const viewCache = {}
+const prefix = 'cloud://onen-pwd.6f6e-onen-pwd-1302122430/mini/'
 const themeBvr = require('../behaviors/theme')
 const commonBvr = require('../behaviors/common')
-const configBvr = require('../behaviors/config')
+const selectBvr = require('../behaviors/select')
 const loadingBvr = require('../behaviors/loading')
 
 Component({
@@ -29,7 +30,7 @@ Component({
     pureDataPattern: /^_/
   },
 
-  behaviors: [themeBvr, commonBvr, configBvr, loadingBvr],
+  behaviors: [themeBvr, commonBvr, selectBvr, loadingBvr],
 
   observers: {
     isSafe: function (state) {
@@ -46,7 +47,10 @@ Component({
         userInfo: state ? await getUserInfo('userInfo') : null
       })
 
-      state && this._fetchStoragePwd()
+      if (state) {
+        this._fetchStoragePwd()
+        this._checkFirstState('isFirstLogin')
+      }
 
       console.log('[login state]: ', state)
       console.warn(state ? '已授权' : '未授权')
@@ -145,45 +149,7 @@ Component({
         state: 'CloudDownload',
         content: '从云服务中同步所有密码记录'
       }
-    },
-    themeSelect: [
-      {
-        type: 'light',
-        icon: 'sun',
-        name: '亮色模式'
-      },
-      {
-        type: 'dark',
-        icon: 'moon',
-        name: '深色模式'
-      }
-    ],
-    cleanSelect: [
-      {
-        type: 'CleanLocal',
-        name: '清空本地数据'
-      },
-      {
-        type: 'CleanCloud',
-        name: '清空备份数据'
-      },
-      {
-        type: 'CleanAll',
-        name: '清空所有数据'
-      }
-    ],
-    cloudSelect: [
-      {
-        type: 'CloudUpload',
-        icon: 'cloudup',
-        name: '备份所有数据'
-      },
-      {
-        type: 'CloudDownload',
-        icon: 'clouddown',
-        name: '同步所有数据'
-      }
-    ]
+    }
   },
 
   methods: {
@@ -247,19 +213,13 @@ Component({
 
       return {
         path: '/pages/index',
-        imageUrl: this.data._shareUrls[theme],
+        imageUrl: `${prefix}share-${theme}.png`,
         title: '🎈我在这儿记录密码，轻便易用，不再烦恼密码丢失❗❗'
       }
     },
 
     showSafe() {
       this.setData({ isSafe: true })
-    },
-
-    selectBus({ currentTarget }) {
-      const { state, type } = currentTarget.dataset
-
-      this[`_select${state}`](type)
     },
 
     actionBus({ currentTarget }) {
@@ -269,9 +229,9 @@ Component({
     },
 
     bindCola() {
-      const { qrUrls, theme } = this.data
+      const { theme } = this.data
 
-      wx.previewImage({ urls: [qrUrls[theme]] })
+      wx.previewImage({ urls: [`${prefix}QR-${theme}.png`] })
     },
 
     bindCopy({ target, currentTarget }) {
@@ -285,8 +245,11 @@ Component({
         })
     },
 
-    bindClean(e) {
-      console.log(e)
+    bindGuide({ detail }) {
+      const { type } = detail
+
+      this.setData({ [`${type}`]: false })
+      wx.setStorageSync(type, false)
     },
 
     bindDetail({ currentTarget }) {
@@ -320,7 +283,10 @@ Component({
       wx.navigateTo({
         url: `/pages/register/register?_type=${type}&_token=${token}`,
         events: {
-          registerDone: () => this._fetchStoragePwd()
+          registerDone: () => {
+            this._fetchStoragePwd()
+            this._checkFirstState('isFirstAdd')
+          }
         }
       })
     }),
@@ -480,7 +446,6 @@ Component({
     },
 
     async _actionCleanCloud() {
-      // this.setData({ isDrawer: false })
       const { pwdList } = this.data
 
       this.showLoading()
@@ -510,7 +475,6 @@ Component({
     },
 
     async _actionCleanAll() {
-      // this.setData({ isDrawer: false })
       this.showLoading()
 
       try {
@@ -522,24 +486,6 @@ Component({
         })
 
         tip({ msg: '清空所有数据成功' })
-
-        this._fetchStoragePwd()
-      } catch (err) {
-        tip({ msg: '未知错误，清空失败' })
-        console.log(err)
-      } finally {
-        this.hideLoading()
-      }
-    },
-
-    _actionCleanLocal() {
-      // this.setData({ isDrawer: false })
-      this.showLoading()
-
-      try {
-        wx.removeStorageSync('pwdList')
-
-        tip({ msg: '清空所有本地数据成功' })
 
         this._fetchStoragePwd()
       } catch (err) {
@@ -615,27 +561,21 @@ Component({
       }
     },
 
-    _selectTheme(type) {
-      if (type === this.data.theme) return
+    _actionCleanLocal() {
+      this.showLoading()
 
-      this.setData({ isDrawer: false })
-      this.triggerTheme(type)
-    },
+      try {
+        wx.removeStorageSync('pwdList')
 
-    _selectCloud(type) {
-      this.setData({
-        isCloud: false,
-        isDrawer: false,
-        [`is${type}`]: true
-      })
-    },
+        tip({ msg: '清空所有本地数据成功' })
 
-    _selectClean(type) {
-      this.setData({
-        isClean: false,
-        isDrawer: false,
-        [`is${type}`]: true
-      })
+        this._fetchStoragePwd()
+      } catch (err) {
+        tip({ msg: '未知错误，清空失败' })
+        console.log(err)
+      } finally {
+        this.hideLoading()
+      }
     },
 
     _parsePwdInfo() {
@@ -671,6 +611,12 @@ Component({
 
     _saveStoragePwd(pwdList = []) {
       wx.setStorageSync('pwdList', stringifyFromArray(pwdList))
+    },
+
+    _checkFirstState(type) {
+      const res = wx.getStorageSync(`${type}`)
+
+      this.setData({ [`${type}`]: res === '' ? true : res })
     }
   }
 })

@@ -2,14 +2,22 @@
   position: fixed;
   top: 0;
   width: 100%;
-  background-color: var(--BG-0);
+  background-color: var(--BG-main);
   overflow: hidden;
   z-index: 2;
 }
 
-.custom-img-wrapper {
+.custom-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   padding: 5px 25rpx;
+}
+
+.text-shadow {
+  text-shadow: 6rpx 6rpx 10rpx rgba(0, 0, 0, 0.2);
+}
+
+.box-shadow {
+  box-shadow: 6rpx 6rpx 10rpx rgba(0, 0, 0, 0.2);
 }

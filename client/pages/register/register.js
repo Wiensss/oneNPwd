@@ -190,16 +190,16 @@ Component({
         isPlus: false,
         isMinus: true,
         isSelect: false,
-        account,
         tag: tag || {},
         mark: mark || '',
         name: name || '',
         email: email || '',
         field: field || '',
         phone: phone || '',
+        account: account || 0,
         password: password || '',
-        num: options.length || 0,
-        options: JSON.parse(JSON.stringify(options)) || []
+        num: (options && options.length) || 0,
+        options: (options && JSON.parse(JSON.stringify(options))) || []
       })
     }),
 

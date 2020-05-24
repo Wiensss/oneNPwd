@@ -7,7 +7,7 @@
   >
     <c-icon
       name="{{ icon }}"
-      color="var(--BTN-TEXT)"
+      color="var(--FG-btn)"
     />
     {{ title }}
     <button

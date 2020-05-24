@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   transform: scale(1.185);
   transition: all 0.3s ease-in-out 0s;
   pointer-events: none;
@@ -18,7 +18,7 @@
   width: 80vw;
   min-height: 10vh;
   border-radius: 20rpx;
-  background-color: var(--BG-3);
+  background-color: var(--BG-main);
   transition-duration: 0.3s;
   overflow: hidden;
 }
@@ -38,7 +38,7 @@
   font-size: 35rpx;
   font-weight: bold;
   text-align: center;
-  color: var(--TEXT-0);
+  color: var(--FG-main);
 }
 
 .modal-center {
@@ -46,7 +46,7 @@
   margin: 20rpx 50rpx;
   width: 100%;
   max-height: 60vh;
-  color: var(--TEXT-1);
+  color: var(--FG-minor);
 }
 
 .modal-btn {
@@ -57,5 +57,5 @@
 }
 
 .modal-hover {
-  background-color: var(--BG-2) !important;
+  opacity: 0.4;
 }

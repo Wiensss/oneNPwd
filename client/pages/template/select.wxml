@@ -11,13 +11,13 @@
       data-type="{{ item.type }}"
       class="flex flex-center margin-level-l height-100r {{ index !== options.length - 1 ? 'hairline' : '' }}"
       hover-class="{{ hover ? 'bg-opacity' : '' }}"
-      style="color: {{ item.type === target ? 'var(--PINK)' : 'var(--TEXT-0)' }}"
+      style="color: {{ item.type === target ? 'var(--PINK)' : 'var(--FG-main)' }}"
       catch:tap="selectBus"
     >
       <c-icon
         wx:if="{{ item.icon }}"
         name="{{ item.icon }}"
-        color="{{ item.type === target ? 'var(--PINK)' : 'var(--TEXT-0)' }}"
+        color="{{ item.type === target ? 'var(--PINK)' : 'var(--FG-main)' }}"
       />
       <text class="padding-left-m">{{ item.name }}</text>
     </view>

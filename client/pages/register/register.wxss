@@ -1,3 +1,7 @@
+.container {
+  background-color: var(--BG-mode);
+}
+
 .wrapper {
   box-sizing: border-box;
   margin: 30rpx 45rpx 0 45rpx;
@@ -5,7 +9,8 @@
   min-height: calc(100vh - 30rpx);
   border-top-left-radius: 50rpx;
   border-top-right-radius: 50rpx;
-  background-color: var(--BG-1);
+  background-color: var(--BG-main);
+  box-shadow: 6rpx -3rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .field {
@@ -20,7 +25,7 @@
   flex: 1;
   padding-right: 20rpx;
   font-size: 32rpx;
-  color: var(--TEXT-1);
+  color: var(--FG-minor);
 }
 
 .field-col {
@@ -33,12 +38,12 @@
   margin-top: 10rpx;
   padding: 20rpx;
   font-size: 30rpx;
-  color: var(--TEXT-1);
+  color: var(--FG-minor);
   width: auto;
   height: 120rpx;
   line-height: 30rpx;
   border-radius: 20rpx;
-  background-color: var(--BG-2);
+  background-color: var(--BG-minor);
 }
 
 .field-title {
@@ -49,7 +54,7 @@
   width: 140rpx;
   font-size: 32rpx;
   font-weight: bold;
-  color: var(--TEXT-0);
+  color: var(--FG-main);
   text-align: justify;
 }
 

@@ -9,12 +9,12 @@
       wx:key="type"
       data-type="{{ item.type }}"
       class="flex flex-center margin-level-l height-100r {{ index === 0 ? 'hairline': '' }}"
-      style="color: {{ theme === item.type ? 'var(--PINK)' : 'var(--TEXT-0)' }}"
+      style="color: {{ theme === item.type ? 'var(--PINK)' : 'var(--FG-main)' }}"
       catch:tap="bindTheme"
     >
       <c-icon
         name="{{ item.type === 'light' ? 'sun' : 'moon' }}"
-        color="{{ theme === item.type ? 'var(--PINK)' : 'var(--TEXT-0)' }}"
+        color="{{ theme === item.type ? 'var(--PINK)' : 'var(--FG-main)' }}"
       />
       <text class="padding-left-m">{{ item.name }}</text>
     </view>

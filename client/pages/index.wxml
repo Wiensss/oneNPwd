@@ -10,21 +10,29 @@
   class="{{ theme }} container"
   style="margin-top: {{ curBarHeight }}; height: calc(100vh - {{ curBarHeight }})"
 >
+  <!-- 指导页 -->
+  <c-guide
+    show="{{ isFirstLogin || isFirstAdd }}"
+    guide="{{ isFirstLogin ? 'tap' : 'slide' }}"
+    height="{{ curBarHeight }}"
+    catch:click="bindGuide"
+  />
+
   <!-- 自定义标题栏 -->
   <c-custom
     id="navBar"
     data-state="Drawer"
     rotate="{{ isDrawer }}"
     avatar="{{ userInfo.avatarUrl }}"
-    nick-name="{{ userInfo.nickName }}"
+    name="{{ userInfo.nickName }}"
     catch:open="stateBus"
     catch:getuserinfo="login"
   />
 
   <!-- 登录提示 -->
   <c-notify
-    color="var(--TEXT-0)"
-    bg-color="var(--BG-1)"
+    color="var(--FG-main)"
+    bg-color="var(--BG-mode)"
     show="{{ isLogin }}"
     time="{{ lastTime }}"
     name="{{ userInfo.nickName }}"
@@ -39,8 +47,8 @@
     >
       <view class="animate-fadein-left">
         <c-cell
-          color="var(--TEXT-0)"
-          bg-color="var(--BG-2)"
+          color="var(--FG-main)"
+          bg-color="var(--BG-minor)"
           tag="{{ item.tag }}"
           cloud="{{ item.cloud }}"
           title="{{ item.field }}"

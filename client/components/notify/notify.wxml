@@ -7,10 +7,10 @@
     style="background: {{ bgColor }}; color: {{ color }}"
   >
     <view>
-      🎉欢迎回来，
+      🎉欢迎{{ time !== '0' ? '回来' : '' }}，
       <text class="user-font">{{ name }}</text>❗❗
     </view>
-    <view>
+    <view wx:if="{{ time !== '0' }}">
       上次登录时间为
       <text class="user-font">{{ time }}</text>
     </view>

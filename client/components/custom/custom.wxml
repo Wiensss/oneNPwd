@@ -1,14 +1,14 @@
 <view style="height: {{ navBarHeight }}">
   <view
-    class="custom-img-wrapper"
+    class="custom-wrapper"
     style="margin-top: {{ statusBarHeight }}"
   >
     <image
-      class="margin-left-m width-120r radius-round {{ rotate ? 'animate-rotate' : '' }}"
+      class="margin-left-m width-120r radius-round box-shadow {{ rotate ? 'animate-rotate' : '' }}"
       mode="widthFix"
       src="{{ avatar || '../../images/user.png' }}"
     />
-    <view class="padding-left-m text-main text-bold">{{ nickName }}</view>
+    <view class="padding-left-m text-main text-bold text-shadow">{{ name }}</view>
     <button
       wx:if="{{ !avatar }}"
       class="opacity-btn"

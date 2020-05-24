@@ -1,4 +1,4 @@
-const app = getApp()
+const $ = getApp()
 
 Component({
   options: {
@@ -14,15 +14,15 @@ Component({
       type: String,
       value: ''
     },
-    nickName: {
+    name: {
       type: String,
       value: ''
     }
   },
 
   data: {
-    navBarHeight: app.store.navBarHeight + 'px',
-    statusBarHeight: app.store.statusBarHeight + 'px'
+    navBarHeight: $.store.navBarHeight + 'px',
+    statusBarHeight: $.store.statusBarHeight + 'px'
   },
 
   methods: {

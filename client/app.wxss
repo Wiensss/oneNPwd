@@ -9,11 +9,6 @@ page {
     sans-serif;
 }
 
-.light,
-.dark {
-  background: var(--BG-0);
-}
-
 .container {
   box-sizing: border-box;
   display: flex;
@@ -21,17 +16,19 @@ page {
   align-items: center;
   width: 100vw;
   height: 100%;
+  background-color: var(--BG-main);
 }
 
 .c-btn {
   padding: 0 50rpx !important;
   border-radius: 10rpx !important;
-  color: var(--BTN-TEXT) !important;
-  background-color: var(--BTN-BG) !important;
+  color: var(--FG-btn) !important;
+  background-color: var(--BG-btn) !important;
+  box-shadow: 6rpx 6rpx 8rpx rgba(0, 0, 0, 0.15);
 }
 
 .c-hover {
-  background-color: var(--BTN-HOVER) !important;
+  background-color: var(--BG-hover) !important;
 }
 
 .opacity-btn {
@@ -57,6 +54,6 @@ page {
   pointer-events: none;
   transform: scale(0.5);
   transform-origin: center;
-  border: 0 solid var(--TEXT-1);
+  border: 0 solid var(--FG-minor);
   border-bottom-width: 1px;
 }

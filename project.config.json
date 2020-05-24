@@ -7,7 +7,7 @@
 	"appid": "wxda8515fa2987e0cb",
 	"simulatorPluginLibVersion": {},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"enhance": true,
 		"postcss": true,

@@ -11,7 +11,7 @@ Component({
     },
     color: {
       type: String,
-      value: 'var(--BG-2)'
+      value: 'var(--BG-mode)'
     },
     bgColor: {
       type: String,

@@ -1,7 +1,7 @@
 <c-slideview
   icon
   buttons="{{ buttons }}"
-  color="{{ tag.color ? tag.color : 'var(--BG-2)' }}"
+  color="{{ tag.color ? tag.color : 'var(--BG-main)' }}"
   bgColor="{{ tag.bgColor ? tag.bgColor : 'var(--PINK)' }}"
   bind:buttontap="onTap"
 >
@@ -21,7 +21,7 @@
       >{{ tag.name }}</view>
       <c-icon
         name="cloudcheck"
-        color="{{ cloud ? 'var(--PINK)' : 'var(--TEXT-1)' }}"
+        color="{{ cloud ? 'var(--PINK)' : 'var(--FG-minor)' }}"
       />
     </view>
   </view>

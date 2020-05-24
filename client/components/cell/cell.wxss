@@ -12,6 +12,7 @@
   align-items: center;
   width: 100%;
   border-radius: 12rpx;
+  box-shadow: 5rpx 5rpx 15rpx rgba(0, 0, 0, 0.15);
 }
 
 .cell-tag {

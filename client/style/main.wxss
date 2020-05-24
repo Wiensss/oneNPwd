@@ -328,39 +328,36 @@
   font-size: 50rpx;
 }
 .text-main {
-  color: var(--TEXT-0);
+  color: var(--FG-main);
 }
 .text-minor {
-  color: var(--TEXT-1);
+  color: var(--FG-minor);
 }
 .text-pink {
   color: var(--PINK);
 }
 .text-btn {
-  color: var(--BTN-TEXT);
+  color: var(--FG-btn);
 }
 
 /* Background Color */
 .bg-0 {
-  background-color: var(--BG-0);
+  background-color: var(--BG-main);
 }
 .bg-1 {
-  background-color: var(--BG-1);
+  background-color: var(--BG-mode);
 }
 .bg-2 {
-  background-color: var(--BG-2);
-}
-.bg-3 {
-  background-color: var(--BG-3);
+  background-color: var(--BG-minor);
 }
 .bg-pink {
   background-color: var(--PINK);
 }
 .bg-btn {
-  background-color: var(--BTN-BG);
+  background-color: var(--BG-btn);
 }
 .bg-hover {
-  background-color: var(--BTN-HOVER);
+  background-color: var(--BG-hover);
 }
 .bg-opacity {
   opacity: 0.4;

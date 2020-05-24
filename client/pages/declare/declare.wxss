@@ -1,3 +1,7 @@
+.container {
+  background-color: var(--BG-mode);
+}
+
 .wrapper {
   box-sizing: border-box;
   margin: 30rpx 45rpx 0 45rpx;
@@ -5,11 +9,11 @@
   min-height: calc(100vh - 30rpx);
   border-top-left-radius: 50rpx;
   border-top-right-radius: 50rpx;
-  background-color: var(--BG-1);
+  background-color: var(--BG-main);
 }
 
 
 .private-text {
   font-size: 26rpx;
-  color: var(--TEXT-1);
+  color: var(--FG-minor);
 }
