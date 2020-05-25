@@ -15,9 +15,9 @@ page {
 page {
   --BG-mode: rgb(10, 10, 10);
   --BG-main: rgb(25, 25, 25);
-  --BG-minor: rgba(47, 47, 47, 0.85);
-  --BG-btn: rgb(38, 38, 38);
-  --BG-hover: rgb(38, 38, 38, 0.5);
+  --BG-minor: rgba(10, 10, 10, 0.85);
+  --BG-btn: rgb(35, 35, 35);
+  --BG-hover: rgb(35, 35, 35, 0.5);
   --FG-main: rgba(245, 245, 245, 0.9);
   --FG-minor: rgba(200, 200, 200, 0.6);
   --FG-btn: rgb(255, 55, 95);

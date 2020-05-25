@@ -91,6 +91,10 @@
   padding-left: 30rpx;
   padding-right: 30rpx;
 }
+.padding-level-ml {
+  padding-left: 40rpx;
+  padding-right: 40rpx;
+}
 .padding-level-l {
   padding-left: 50rpx;
   padding-right: 50rpx;

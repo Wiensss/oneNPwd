@@ -328,11 +328,12 @@ Component({
           if (matchRes === curItem.token) this.showSafe()
         } else this.setData({ isTip: true })
       } catch (err) {
-        if (err === 'startSoterAuthentication:fail cancel') return
+        if (err.indexOf('startSoterAuthentication:fail')) return
 
         this.setData({ isDetail: false })
 
         tip({ msg: '尝试调用设备指纹认证，未知错误，请重试' })
+        console.log('[call checkSafe fail]: ', err)
       }
     },
 

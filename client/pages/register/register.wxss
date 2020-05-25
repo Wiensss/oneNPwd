@@ -24,6 +24,8 @@
 .field input {
   flex: 1;
   padding-right: 20rpx;
+  height: 35rpx;
+  line-height: 35rpx;
   font-size: 32rpx;
   color: var(--FG-minor);
 }
@@ -41,7 +43,7 @@
   color: var(--FG-minor);
   width: auto;
   height: 120rpx;
-  line-height: 30rpx;
+  line-height: 32rpx;
   border-radius: 20rpx;
   background-color: var(--BG-minor);
 }

@@ -14,7 +14,7 @@
 
     <block wx:else>
       <view
-        class="flex-col padding-bottom-m padding-level-l"
+        class="flex-col padding-bottom-m padding-level-ml"
         catch:tap="bindCopy"
       >
         <!-- 帐号名称 -->

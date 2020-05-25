@@ -45,7 +45,7 @@
       wx:for="{{ pwdList }}"
       wx:key="token"
     >
-      <view class="animate-fadein-left">
+      <view class="animate-fadein-up">
         <c-cell
           color="var(--FG-main)"
           bg-color="var(--BG-minor)"

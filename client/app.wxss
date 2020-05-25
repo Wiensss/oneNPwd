@@ -22,6 +22,7 @@ page {
 .c-btn {
   padding: 0 50rpx !important;
   border-radius: 10rpx !important;
+  font-size: 32rpx !important;
   color: var(--FG-btn) !important;
   background-color: var(--BG-btn) !important;
   box-shadow: 6rpx 6rpx 8rpx rgba(0, 0, 0, 0.15);

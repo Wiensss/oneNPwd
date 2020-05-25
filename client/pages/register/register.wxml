@@ -228,7 +228,7 @@
         >
           <text 
             class="area-tag" 
-            style="color: {{ mark.length >= 50 ? 'var(--PINK)' : 'var(--FG-minor)' }}"
+            style="color: {{ mark.length > 50 ? 'var(--PINK)' : 'var(--FG-minor)' }}"
           >{{ mark.length }}/50</text>
         </textarea>
       </view>

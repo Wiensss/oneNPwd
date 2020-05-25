@@ -24,7 +24,7 @@
 }
 
 .modal-active {
-  transition-duration: 0.3s;
+  transition-duration: 0.15s;
   transform: scale(1);
   overflow-x: hidden;
   overflow-y: hidden;
@@ -52,6 +52,7 @@
 .modal-btn {
   flex: 1;
   margin-top: 50rpx;
+  font-size: 32rpx !important;
   color: var(--PINK) !important;
   background-color: inherit !important;
 }

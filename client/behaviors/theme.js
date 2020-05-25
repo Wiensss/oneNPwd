@@ -22,6 +22,16 @@ module.exports = Behavior({
         frontColor: theme === 'dark' ? '#ffffff' : '#000000',
         backgroundColor: theme === 'dark' ? '#0a0a0a' : '#f5f5f5'
       })
+
+      wx.setBackgroundTextStyle({
+        textStyle: theme === 'dark' ? 'light' : 'dark'
+      })
+
+      wx.setBackgroundColor({
+        backgroundColor: theme === 'dark' ? '#191919' : '#ededed',
+        backgroundColorTop: theme === 'dark' ? '#191919' : '#ededed',
+        backgroundColorBottom: theme === 'dark' ? '#191919' : '#ededed'
+      })
     },
 
     diffTheme() {
