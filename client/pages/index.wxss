@@ -1,6 +1,7 @@
 .wrapper {
-  margin-top: 50rpx;
-  margin-bottom: 150rpx;
+  box-sizing: border-box;
+  padding-top: 100rpx;
+  padding-bottom: 125rpx;
 }
 
 .drawer-item {

@@ -6,15 +6,12 @@
 
 <c-loading show="{{ isLoading }}" />
 
-<view
-  class="{{ theme }} container"
-  style="margin-top: {{ curBarHeight }}; height: calc(100vh - {{ curBarHeight }})"
->
+<view class="{{ theme }} container">
   <!-- 指导页 -->
   <c-guide
     show="{{ isFirstLogin || isFirstAdd }}"
     guide="{{ isFirstLogin ? 'tap' : 'slide' }}"
-    height="{{ curBarHeight }}"
+    height="{{ curBarHeight }}px"
     catch:click="bindGuide"
   />
 
@@ -39,13 +36,18 @@
   />
 
   <!-- 主内容 -->
-  <view class="wrapper">
-    <block
+  <view
+    class="wrapper"
+    style="padding-top: {{ curBarHeight + 10 }}px"
+  >
+    <view
       wx:if="{{ !isRefresh && userInfo }}"
-      wx:for="{{ pwdList }}"
-      wx:key="token"
+      class="animate-fadein-up"
     >
-      <view class="animate-fadein-up">
+      <block
+        wx:for="{{ pwdList }}"
+        wx:key="token"
+      >
         <c-cell
           color="var(--FG-main)"
           bg-color="var(--BG-minor)"
@@ -56,8 +58,8 @@
           catch:tap="bindDetail"
           catch:click="bindAction"
         />
-      </view>
-    </block>
+      </block>
+    </view>
   </view>
 
   <!--  底部固定按钮 -->

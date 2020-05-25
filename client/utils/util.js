@@ -131,6 +131,7 @@ const coverToObject = (array, tokens) => {
         name: item.name,
         field: item.field,
         token: item.token,
+        update: item.update,
         account: item.account,
         tag: JSON.stringify(item.tag)
       })
@@ -159,6 +160,7 @@ const coverToObjectArray = array => {
         name: item.name,
         field: item.field,
         token: item.token,
+        update: item.update,
         account: item.account,
         tag: JSON.stringify(item.tag)
       })

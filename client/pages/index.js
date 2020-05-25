@@ -176,7 +176,7 @@ Component({
         .select('#navBar')
         .boundingClientRect(rect => {
           this.setData({
-            curBarHeight: Math.floor(rect.height) + 'px'
+            curBarHeight: Math.floor(rect.height)
           })
         })
         .exec()
@@ -328,7 +328,7 @@ Component({
           if (matchRes === curItem.token) this.showSafe()
         } else this.setData({ isTip: true })
       } catch (err) {
-        if (err.indexOf('startSoterAuthentication:fail')) return
+        if (err.indexOf('startSoterAuthentication:fail') !== -1) return
 
         this.setData({ isDetail: false })
 
@@ -363,10 +363,7 @@ Component({
 
         pwdList.forEach(item => {
           item.view = viewCache[item.token] || item.view
-          if (item.token === _token) {
-            item.cloud = true
-            item.update = +new Date()
-          }
+          if (item.token === _token) item.cloud = true
         })
 
         this._saveStoragePwd(pwdList)
@@ -397,10 +394,7 @@ Component({
 
         pwdList.forEach(item => {
           item.view = viewCache[item.token] || item.view
-          if (item.token === _token) {
-            item.cloud = false
-            item.update = +new Date()
-          }
+          if (item.token === _token) item.cloud = false
         })
 
         this._saveStoragePwd(pwdList)
@@ -514,7 +508,6 @@ Component({
         pwdList.forEach(item => {
           item.view = viewCache[item.token] || item.view
           item.cloud = true
-          item.update = +new Date()
         })
 
         this._saveStoragePwd(pwdList)
@@ -544,7 +537,6 @@ Component({
           if (!pwdList.some(item => item.token === token)) {
             data.view = 0
             data.cloud = true
-            data.update = +new Date()
             data.tag = JSON.parse(data.tag)
             pwdList.push(data)
           }
@@ -604,10 +596,9 @@ Component({
 
     _fetchStoragePwd() {
       const pwdList = parseFromArray(wx.getStorageSync('pwdList'))
-
       pwdList.forEach(item => (viewCache[item.token] = item.view))
 
-      this.setData({ pwdList })
+      this.setData({ pwdList: pwdList.sort((a, b) => b.update - a.update) })
     },
 
     _saveStoragePwd(pwdList = []) {
