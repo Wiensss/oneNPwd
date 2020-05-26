@@ -74,6 +74,12 @@
   <img width="230px" src="https://6f6e-onen-pwd-1302122430.tcb.qcloud.la/readme/detail.gif?sign=bbba5fbc4b24457c81439e85ae3acf35&t=1590474626" />
 </span>
 
+## 📷 扫一扫
+
+<div align="center">
+  <img width="250px" src="https://6f6e-onen-pwd-1302122430.tcb.qcloud.la/readme/code.png?sign=213d4ee238f5a9de9cb56f2b7ea3cbaa&t=1590477192" />
+</div>
+
 ## ⏳ 许可
 
 - [MIT](https://github.com/Colasour/oneNPwd/blob/master/LICENSE)
