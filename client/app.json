@@ -18,7 +18,7 @@
   "window": {
     "navigationStyle": "custom",
     "enablePullDownRefresh": true,
-    "navigationBarTitleText": "oneN 密码本"
+    "navigationBarTitleText": "oneNPwd"
   },
   "networkTimeout": {
     "request": 10000,

@@ -63,21 +63,22 @@
   </view>
 
   <!--  底部固定按钮 -->
-  <view
-    class="realtive fixed-bottom"
-    hover-class="bg-opacity"
-  >
-    <c-icon
-      name="pwd"
-      size="80rpx"
-      data-field="lock"
-      class="fixed-button"
-    />
-    <button
-      class="opacity-btn"
-      open-type="getUserInfo"
-      catch:getuserinfo="login"
-    />
+  <view class="fixed-bottom">
+    <view
+      class="fixed-buttons"
+      hover-class="bg-opacity"
+    >
+      <c-icon
+        name="password"
+        size="80rpx"
+        class="fixed-icon"
+      />
+      <button
+        class="opacity-btn"
+        open-type="getUserInfo"
+        catch:getuserinfo="login"
+      />
+    </view>
   </view>
 
   <!-- 抽屉 -->

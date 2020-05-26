@@ -587,21 +587,30 @@ Component({
     },
 
     _updatePwdView() {
-      const { pwdList } = this.data
+      const { pwdList = [] } = this.data
 
-      pwdList.forEach(item => (item.view = viewCache[item.token] || item.view))
+      if (pwdList.length)
+        pwdList.forEach(
+          item => (item.view = viewCache[item.token] || item.view)
+        )
 
       this._saveStoragePwd(pwdList)
     },
 
     _fetchStoragePwd() {
       const pwdList = parseFromArray(wx.getStorageSync('pwdList'))
-      pwdList.forEach(item => (viewCache[item.token] = item.view))
 
-      this.setData({ pwdList: pwdList.sort((a, b) => b.update - a.update) })
+      if (pwdList.length)
+        pwdList.forEach(item => (viewCache[item.token] = item.view))
+
+      this.setData({
+        pwdList: pwdList.length
+          ? pwdList.sort((a, b) => b.update - a.update)
+          : []
+      })
     },
 
-    _saveStoragePwd(pwdList = []) {
+    _saveStoragePwd(pwdList) {
       wx.setStorageSync('pwdList', stringifyFromArray(pwdList))
     },
 
