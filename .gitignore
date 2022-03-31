@@ -1,3 +1,5 @@
+project.private.config.json
+
 # client
 client/utils/private.js
 

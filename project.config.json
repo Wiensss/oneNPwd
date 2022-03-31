@@ -39,7 +39,9 @@
     "useStaticServer": true,
     "showES6CompileOption": false,
     "disableUseStrict": false,
-    "useCompilerPlugins": false,
+    "useCompilerPlugins": [
+      "sass"
+    ],
     "minifyWXML": true
   },
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
