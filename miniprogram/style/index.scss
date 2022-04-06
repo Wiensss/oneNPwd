@@ -1,0 +1,256 @@
+@import "./theme";
+
+$units: (
+  auto: "auto",
+  full: 100%,
+  "screen-w": 100vw,
+  "screen-h": 100vh,
+  0: 0,
+  px: 2rpx,
+  0_5: 0.125rem,
+  1: 0.25rem,
+  1_5: 0.375rem,
+  2: 0.5rem,
+  3: 0.75rem,
+  3_5: 0.875rem,
+  4: 1rem,
+  5: 1.25rem,
+  6: 1.5rem,
+  7: 1.75rem,
+  8: 2rem,
+  9: 2.25rem,
+  10: 2.5rem,
+  11: 2.75rem,
+  12: 3rem,
+  14: 3.5rem,
+  16: 4rem,
+  18: 4.5rem,
+  20: 5rem,
+  24: 6rem,
+  28: 7rem,
+  32: 8rem,
+  36: 9rem,
+  40: 10rem,
+  44: 11rem,
+  48: 12rem,
+  52: 13rem,
+  56: 14rem,
+  60: 15rem,
+  64: 16rem,
+  72: 18rem,
+  80: 20rem,
+  96: 24rem,
+  100: 100rpx,
+  120: 120rpx,
+  150: 150rpx,
+  180: 180rpx,
+  200: 200rpx,
+  250: 250rpx,
+  300: 300rpx,
+  350: 350rpx,
+  400: 400rpx,
+);
+
+$nums: (
+  100: 100,
+  200: 200,
+  300: 300,
+  400: 400,
+  500: 500,
+  600: 600,
+  700: 700,
+  800: 800,
+  900: 900,
+);
+
+$sizes: (
+  xs: 24rpx,
+  sm: 30rpx,
+  base: 36rpx,
+  lg: 44rpx,
+  xl: 56rpx,
+  2xl: 64rpx,
+  3xl: 80rpx,
+);
+
+$rounds: (
+  none: 0,
+  sm: 25%,
+  base: 50%,
+  md: 75%,
+  full: 100%,
+);
+
+$positions: (
+  flex: "flex",
+  "inline-flex": "inline-flex",
+  block: "block",
+  "inline-block": "inline-block",
+  position: "position",
+);
+
+@each $key, $value in $units {
+  /* padding */
+  .p-#{$key} {
+    padding: $value;
+  }
+  .pt-#{$key} {
+    padding-top: $value;
+  }
+  .pb-#{$key} {
+    padding-bottom: $value;
+  }
+  .pr-#{$key} {
+    padding-right: $value;
+  }
+  .pl-#{$key} {
+    padding-left: $value;
+  }
+  .px-#{$key} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+  .py-#{$key} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+
+  /* margin */
+  .m-#{$key} {
+    margin: $value;
+  }
+  .mt-#{$key} {
+    margin-top: $value;
+  }
+  .mb-#{$key} {
+    margin-bottom: $value;
+  }
+  .mr-#{$key} {
+    margin-right: $value;
+  }
+  .ml-#{$key} {
+    margin-left: $value;
+  }
+  .mx-#{$key} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+  .my-#{$key} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+
+  /* Size */
+  .h-#{$key} {
+    height: $value;
+  }
+  .w-#{$key} {
+    width: $value;
+  }
+  .min-h-#{$key} {
+    min-height: $value;
+  }
+  .max-h-#{$key} {
+    max-height: $value;
+  }
+  .min-w-#{$key} {
+    min-width: $value;
+  }
+  .max-w-#{$key} {
+    max-width: $value;
+  }
+
+  // Grid
+  .gap-#{$key} {
+    gap: $value;
+  }
+  .gap-x-#{$key} {
+    column-gap: $value;
+  }
+  .gap-y-#{$key} {
+    gap: $value
+  }
+}
+
+/* Position */
+@each $key, $value in $positions {
+  .#{$key} {
+    position: $value;
+  }
+}
+
+/* Round */
+@each $key, $value in $rounds {
+  .rounded-#{$key} {
+    border-radius: $value;
+  }
+}
+
+/* Text */
+@each $key, $value in $sizes {
+  .text-#{$key} {
+    font-size: $value;
+    line-height: $value;
+  }
+  .leading-#{$key} {
+    line-height: $value;
+  }
+}
+@each $key, $value in $nums {
+  .font-#{($key / 100)} {
+    font-weight: $value;
+  }
+  .opacity-#{($key / 100)} {
+    opacity: $value / 1000;
+  }
+  .z-#{$key} {
+    z-index: $value;
+  }
+}
+.text-italic {
+  font-style: italic;
+}
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.overflow-ellipsis {
+  text-overflow: ellipsis;
+}
+.overflow-clip {
+  text-overflow: clip;
+}
+
+/* Flex */
+.flex {
+  display: flex;
+}
+.inline-flex {
+  display: inline-flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row-end {
+  justify-content: flex-end;
+}
+.flex-row-center {
+  justify-content: center;
+}
+.flex-row-between {
+  justify-content: space-between;
+}
+.flex-row-around {
+  justify-content: space-around;
+}
+.flex-col-center {
+  align-items: center;
+}
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+.flex-item {
+  flex: 1;
+}

@@ -1,0 +1,47 @@
+@import '../../../style/variable.scss';
+
+.dark {
+  background: #00000066;
+}
+
+.light {
+  background: #ffffff66;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: #00000066;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  color: #{$--color-danger-500};
+}
+
+.loading-spinner {
+  box-sizing: border-box;
+  width: 80rpx;
+  height: 80rpx;
+  border: 5rpx solid transparent;
+  border-radius: 100%;
+  border-top-color: initial;
+  border-right-color: initial;
+  animation: rotate 0.6s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}

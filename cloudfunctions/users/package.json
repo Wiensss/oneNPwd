@@ -1,0 +1,11 @@
+{
+  "name": "users",
+  "main": "index.js",
+  "version": "1.0.0",
+  "author": "Colasour",
+  "description": "onen-pwd cloud function",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}
