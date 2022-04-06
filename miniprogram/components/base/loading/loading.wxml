@@ -1,0 +1,5 @@
+<view wx:if="{{ show }}" class="{{ mode }} mark" catch:tap="noop">
+  <view class="loading">
+    <view class="loading-spinner" />
+  </view>
+</view>

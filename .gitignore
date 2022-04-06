@@ -1,3 +1,6 @@
+dist
+.DS_Store
+node_modules
 project.private.config.json
 
 # client

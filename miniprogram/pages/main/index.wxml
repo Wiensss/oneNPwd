@@ -1,0 +1,2 @@
+<b-loading show="{{ loading }}" />
+<AccountBar loading="{{ loading }}" user-info="{{ userInfo }}" catch:getUserInfo="getUserInfo" />

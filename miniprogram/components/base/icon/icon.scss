@@ -1,0 +1,142 @@
+@font-face {
+  font-family: "c-icon"; /* Project id 1819809 */
+  src: url('//at.alicdn.com/t/font_1819809_j2vb3j445dj.woff2?t=1648881851413') format('woff2'),
+       url('//at.alicdn.com/t/font_1819809_j2vb3j445dj.woff?t=1648881851413') format('woff'),
+       url('//at.alicdn.com/t/font_1819809_j2vb3j445dj.ttf?t=1648881851413') format('truetype');
+}
+
+.c-icon {
+  font-family: "c-icon" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.user:before {
+  content: "\e603";
+}
+
+.cloud-password:before {
+  content: "\63";
+}
+
+.cloud-off-full:before {
+  content: "\e754";
+}
+
+.clock:before {
+  content: "\e604";
+}
+
+.search:before {
+  content: "\e605";
+}
+
+.cloud-success:before {
+  content: "\e64c";
+}
+
+.broom:before {
+  content: "\e60e";
+}
+
+.cloud-fresh-full:before {
+  content: "\e6f0";
+}
+
+.cloud-download-full:before {
+  content: "\eb1e";
+}
+
+.empty:before {
+  content: "\e893";
+}
+
+.cloud-success-full:before {
+  content: "\ede3";
+}
+
+.cloud-upload-full:before {
+  content: "\e7de";
+}
+
+.trash-can:before {
+  content: "\e602";
+}
+
+.edit:before {
+  content: "\e646";
+}
+
+.menu:before {
+  content: "\e639";
+}
+
+.round:before {
+  content: "\e6a3";
+}
+
+.share:before {
+  content: "\e614";
+}
+
+.light:before {
+  content: "\e61c";
+}
+
+.copy:before {
+  content: "\e94c";
+}
+
+.logo:before {
+  content: "\e601";
+}
+
+.flag:before {
+  content: "\e61b";
+}
+
+.heart:before {
+  content: "\eb18";
+}
+
+.github:before {
+  content: "\e600";
+}
+
+.success:before {
+  content: "\e669";
+}
+
+.up:before {
+  content: "\e636";
+}
+
+.down:before {
+  content: "\e637";
+}
+
+.minus:before {
+  content: "\e63c";
+}
+
+.plus:before {
+  content: "\e63d";
+}
+
+.view:before {
+  content: "\e640";
+}
+
+.sun:before {
+  content: "\e668";
+}
+
+.moon:before {
+  content: "\e75e";
+}
+
+.theme:before {
+  content: "\e66f";
+}
