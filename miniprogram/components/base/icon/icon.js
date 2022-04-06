@@ -2,6 +2,9 @@ const $ = getApp()
 const { THEME_COLOR } = $.require('./constants/global')
 
 Component({
+  options: {
+    addGlobalClass: true,
+  },
   properties: {
     icon: String,
     size: {

@@ -1,0 +1,4 @@
+<view class="mt-24 flex flex-col flex-center opacity-8">
+    <b-icon icon="empty" size="6rem" />
+    <view class="mt-2 text-5 text-sm">{{ emptyTip }}</view>
+</view>

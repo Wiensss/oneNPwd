@@ -1,7 +1,3 @@
-<view
-  class="c-icon {{ icon }}"
-  style="color: {{ color }}; font-size: {{ size }}"
-  catch:tap="onTap"
->
-  <slot />
+<view class="block c-icon {{ icon }}" style="color: {{ color }}; font-size: {{ size }}" catch:tap="onTap">
+    <slot />
 </view>

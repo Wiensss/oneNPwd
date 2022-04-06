@@ -1,10 +1,10 @@
-@import "./theme";
+@import './theme';
 
 $units: (
-  auto: "auto",
+  auto: auto,
   full: 100%,
-  "screen-w": 100vw,
-  "screen-h": 100vh,
+  'screen-w': 100vw,
+  'screen-h': 100vh,
   0: 0,
   px: 2rpx,
   0_5: 0.125rem,
@@ -64,13 +64,13 @@ $nums: (
 );
 
 $sizes: (
-  xs: 24rpx,
-  sm: 30rpx,
-  base: 36rpx,
-  lg: 44rpx,
-  xl: 56rpx,
-  2xl: 64rpx,
-  3xl: 80rpx,
+  xs: 22rpx,
+  sm: 26rpx,
+  base: 30rpx,
+  lg: 36rpx,
+  xl: 44rpx,
+  2xl: 56rpx,
+  3xl: 64rpx,
 );
 
 $rounds: (
@@ -82,11 +82,18 @@ $rounds: (
 );
 
 $positions: (
-  flex: "flex",
-  "inline-flex": "inline-flex",
-  block: "block",
-  "inline-block": "inline-block",
-  position: "position",
+  absolute: absolute,
+  fixed: fixed,
+  relative: relative,
+  static: static,
+  sticky: sticky,
+);
+
+$elements: (
+  flex: flex,
+  'inline-flex': inline-flex,
+  block: block,
+  'inline-block': inline-block,
 );
 
 @each $key, $value in $units {
@@ -160,6 +167,20 @@ $positions: (
     max-width: $value;
   }
 
+  //  Redirect
+  .t-#{$key} {
+    top: $value;
+  }
+  .r-#{$key} {
+    right: $value;
+  }
+  .b-#{$key} {
+    bottom: $value;
+  }
+  .l-#{$key} {
+    left: $value;
+  }
+
   // Grid
   .gap-#{$key} {
     gap: $value;
@@ -168,7 +189,7 @@ $positions: (
     column-gap: $value;
   }
   .gap-y-#{$key} {
-    gap: $value
+    gap: $value;
   }
 }
 
@@ -176,6 +197,13 @@ $positions: (
 @each $key, $value in $positions {
   .#{$key} {
     position: $value;
+  }
+}
+
+/* Display */
+@each $key, $value in $elements {
+  .#{$key} {
+    display: $value;
   }
 }
 
@@ -223,34 +251,28 @@ $positions: (
 }
 
 /* Flex */
-.flex {
-  display: flex;
-}
-.inline-flex {
-  display: inline-flex;
-}
 .flex-col {
   flex-direction: column;
 }
-.flex-row-end {
+.flex-end {
   justify-content: flex-end;
 }
-.flex-row-center {
+.justify-center {
   justify-content: center;
 }
-.flex-row-between {
+.space-between {
   justify-content: space-between;
 }
-.flex-row-around {
+.space-around {
   justify-content: space-around;
 }
-.flex-col-center {
+.items-center {
   align-items: center;
 }
 .flex-center {
   justify-content: center;
   align-items: center;
 }
-.flex-item {
+.flex-1 {
   flex: 1;
 }

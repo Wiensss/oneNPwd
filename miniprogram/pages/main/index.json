@@ -1,6 +1,7 @@
 {
-    "component": true,
-    "usingComponents": {
-      "AccountBar": "./accountBar/accountBar"
-    }
+  "component": true,
+  "usingComponents": {
+    "Footer": "./footer/footer",
+    "AccountBar": "./accountBar/accountBar"
+  }
 }

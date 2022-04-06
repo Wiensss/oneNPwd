@@ -1,2 +1,7 @@
 <b-loading show="{{ loading }}" />
+
 <AccountBar loading="{{ loading }}" user-info="{{ userInfo }}" catch:getUserInfo="getUserInfo" />
+<view class="flex-1">
+    <w-empty />
+</view>
+<Footer />

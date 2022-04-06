@@ -1,0 +1,4 @@
+<view class="flex justify-center">
+    <b-icon class="absolute bg-4 z-100 b-0 w-20 h-20 flex flex-center rounded-full" icon="cloud-password" size="3rem" />
+    <view class="absolute bg-4 b-0 w-full h-9" />
+</view>

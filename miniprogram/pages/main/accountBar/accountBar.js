@@ -1,7 +1,7 @@
 const $ = getApp()
 const { showToast } = $.require('./utils/promisify')
-const { NOT_LOGIN } = $.require('./constants/account')
-const { AUTH_PROFILE, SERVER_ERROR } = $.require('./constants/api')
+const { SERVER_ERROR } = $.require('./constants/api')
+const { NOT_LOGIN, AUTH_PROFILE } = $.require('./constants/account')
 const computedBehavior = require('miniprogram-computed').behavior
 
 Component({

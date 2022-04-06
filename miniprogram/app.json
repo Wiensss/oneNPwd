@@ -2,7 +2,8 @@
   "pages": ["pages/main/index"],
   "usingComponents": {
     "b-icon": "./components/base/icon/icon",
-    "b-loading": "./components/base/loading/loading"
+    "b-loading": "./components/base/loading/loading",
+    "w-empty": "/components/widgets/empty/empty"
   },
   "window": {
     "enablePullDownRefresh": true,

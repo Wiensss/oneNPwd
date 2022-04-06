@@ -1,15 +1,20 @@
 const $ = getApp()
 const { showToast } = $.require('./utils/promisify')
-const { NOT_LOGIN, LOGIN_FIELD } = $.require('./constants/account')
+const { SERVER_ERROR } = $.require('./constants/api')
+const { filterRecords } = $.require('./utils/util')
 const { USERS, LOGIN, CHECK_LOGIN, GET_LIST } = $.require('./constants/cloud')
-const { FAIL_LOGIN, AUTH_LOGIN, SERVER_ERROR } = $.require('./constants/api')
+const { NOT_LOGIN, FAIL_LOGIN, AUTH_LOGIN, LOGIN_FIELD } = $.require(
+  './constants/account',
+)
 const loadingBehavior = $.require('./behaviors/loading')
 
 Component({
   behaviors: [loadingBehavior],
   data: {
     loading: false,
+    fetchLoading: false,
     userInfo: null,
+    records: [],
   },
   methods: {
     async onLoad() {
@@ -61,17 +66,18 @@ Component({
     },
     async fetchList() {
       try {
-        this.setData({ loading: true })
+        this.setData({ fetchLoading: true })
 
         const { result } = await wx.cloud.callFunction({
           name: USERS,
           data: { method: GET_LIST },
         })
-        console.log('result', result)
+
+        this.setData({ records: filterRecords(result) })
       } catch ({ message }) {
         showToast({ title: SERVER_ERROR }, message)
       } finally {
-        this.setData({ loading: false })
+        this.setData({ fetchLoading: false })
       }
     },
   },
