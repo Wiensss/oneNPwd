@@ -14,6 +14,10 @@ Component({
       type: Boolean,
       value: false,
     },
+    visible: {
+      type: Boolean,
+      value: false,
+    },
     userInfo: {
       type: Object,
       value: null,
@@ -29,8 +33,8 @@ Component({
     },
   },
   methods: {
-    openDrawer() {
-      console.log('open drawer')
+    openMenubar() {
+      this.setData({ visible: true })
     },
     async getUserProfile() {
       try {

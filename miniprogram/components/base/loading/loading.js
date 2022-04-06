@@ -6,7 +6,7 @@ Component({
     addGlobalClass: true,
   },
   properties: {
-    show: {
+    visible: {
       type: Boolean,
       value: false,
     },

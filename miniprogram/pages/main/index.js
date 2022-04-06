@@ -6,13 +6,15 @@ const { USERS, LOGIN, CHECK_LOGIN, GET_LIST } = $.require('./constants/cloud')
 const { NOT_LOGIN, FAIL_LOGIN, AUTH_LOGIN, LOGIN_FIELD } = $.require(
   './constants/account',
 )
+const themeBehavior = $.require('./behaviors/theme')
 const loadingBehavior = $.require('./behaviors/loading')
 
 Component({
-  behaviors: [loadingBehavior],
+  behaviors: [themeBehavior, loadingBehavior],
   data: {
     loading: false,
     fetchLoading: false,
+    menuVisible: false,
     userInfo: null,
     records: [],
   },

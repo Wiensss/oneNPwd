@@ -1,6 +1,6 @@
 <view style="height: {{ navBarHeight }}">
     <view wx:if="{{ !loading }}" class="ml-7 flex h-full items-center gap-4" style="margin-top: {{ statusBarHeight }}">
-        <image wx:if="{{ userInfo }}" class="w-18 h-18 rounded-full" mode="widthFix" src="{{ userInfo.avatarUrl }}" catch:tap="openDrawer" />
+        <image wx:if="{{ userInfo }}" class="w-18 h-18 rounded-full" mode="widthFix" src="{{ userInfo.avatarUrl }}" catch:tap="openMenubar" />
         <b-icon wx:else icon="user" size="120rpx" catch:tap="getUserProfile">
         </b-icon>
         <text class="w-44 truncate text-italic text-base font-4">{{ username }}</text>

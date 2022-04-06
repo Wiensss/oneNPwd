@@ -2,6 +2,7 @@
   "component": true,
   "usingComponents": {
     "Footer": "./footer/footer",
+    "MenuBar": "./menuBar/menuBar",
     "AccountBar": "./accountBar/accountBar"
   }
 }

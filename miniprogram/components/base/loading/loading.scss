@@ -1,13 +1,5 @@
 @import '../../../style/variable.scss';
 
-.dark {
-  background: #00000066;
-}
-
-.light {
-  background: #ffffff66;
-}
-
 .mask {
   position: fixed;
   top: 0;
@@ -15,7 +7,7 @@
   width: 100%;
   height: 100%;
   z-index: 9999;
-  background: #00000066;
+  opacity: 0.4;
 }
 
 .loading {
@@ -23,7 +15,7 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  color: #{$--color-danger-500};
+  color: $--color-danger-500;
 }
 
 .loading-spinner {

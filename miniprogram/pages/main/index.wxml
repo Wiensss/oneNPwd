@@ -1,7 +1,11 @@
-<b-loading show="{{ loading }}" />
+<view class="container {{ theme }}">
+    <b-loading visible="{{ loading }}" />
 
-<AccountBar loading="{{ loading }}" user-info="{{ userInfo }}" catch:getUserInfo="getUserInfo" />
-<view class="flex-1">
-    <w-empty />
+    <MenuBar model:theme="{{ theme }}" model:visible="{{ menuVisible }}" />
+
+    <AccountBar loading="{{ loading }}" wx:if="{{ !loading }}" model:visible="{{ menuVisible }}" user-info="{{ userInfo }}" catch:getUserInfo="getUserInfo" />
+    <view class="flex-1">
+        <w-empty />
+    </view>
+    <Footer wx:if="{{ !loading }}" />
 </view>
-<Footer />

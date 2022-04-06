@@ -2,134 +2,134 @@
 
 [class*='light'],
 page {
-  color: #{$--color-black-500};
-  background: #{$--color-white-500};
+  color: $--color-black-500;
+  background: $--color-white-500;
 
   .bg-1 {
-    background-color: #{$--color-white-100};
+    background-color: $--color-white-100;
   }
   .bg-2 {
-    background-color: #{$--color-white-200};
+    background-color: $--color-white-200;
   }
   .bg-3 {
-    background-color: #{$--color-white-300};
+    background-color: $--color-white-300;
   }
   .bg-4 {
-    background-color: #{$--color-white-400};
+    background-color: $--color-white-400;
   }
   .bg-5 {
-    background-color: #{$--color-white-500};
+    background-color: $--color-white-500;
   }
   .bg-theme-1 {
-    background-color: #{$--color-danger-100};
+    background-color: $--color-danger-100;
   }
   .bg-theme-2 {
-    background-color: #{$--color-danger-200};
+    background-color: $--color-danger-200;
   }
   .bg-theme-3 {
-    background-color: #{$--color-danger-300};
+    background-color: $--color-danger-300;
   }
   .bg-theme-4 {
-    background-color: #{$--color-danger-400};
+    background-color: $--color-danger-400;
   }
   .bg-theme-5 {
-    background-color: #{$--color-danger-500};
+    background-color: $--color-danger-500;
   }
   .text-1 {
-    color: #{$--color-netural-100};
+    color: $--color-netural-100;
   }
   .text-2 {
-    color: #{$--color-netural-200};
+    color: $--color-netural-200;
   }
   .text-3 {
-    color: #{$--color-netural-300};
+    color: $--color-netural-300;
   }
   .text-4 {
-    color: #{$--color-netural-400};
+    color: $--color-netural-400;
   }
   .text-5 {
-    color: #{$--color-netural-500};
+    color: $--color-netural-500;
   }
   .text-theme-1 {
-    color: #{$--color-danger-100};
+    color: $--color-danger-100;
   }
   .text-theme-2 {
-    color: #{$--color-danger-200};
+    color: $--color-danger-200;
   }
   .text-theme-3 {
-    color: #{$--color-danger-300};
+    color: $--color-danger-300;
   }
   .text-theme-4 {
-    color: #{$--color-danger-400};
+    color: $--color-danger-400;
   }
   .text-theme-5 {
-    color: #{$--color-danger-500};
+    color: $--color-danger-500;
   }
 }
 
 [class*='dark'],
 page {
-  color: #{$--color-white-500};
-  background: #{$--color-black-500};
+  color: $--color-white-500;
+  background: $--color-black-500;
 
   .bg-1 {
-    background-color: #{$--color-black-100};
+    background-color: $--color-black-100;
   }
   .bg-2 {
-    background-color: #{$--color-black-200};
+    background-color: $--color-black-200;
   }
   .bg-3 {
-    background-color: #{$--color-black-300};
+    background-color: $--color-black-300;
   }
   .bg-4 {
-    background-color: #{$--color-black-400};
+    background-color: $--color-black-400;
   }
   .bg-5 {
-    background-color: #{$--color-black-500};
+    background-color: $--color-black-500;
   }
   .bg-theme-1 {
-    background-color: #{$--color-danger-100};
+    background-color: $--color-danger-100;
   }
   .bg-theme-2 {
-    background-color: #{$--color-danger-200};
+    background-color: $--color-danger-200;
   }
   .bg-theme-3 {
-    background-color: #{$--color-danger-300};
+    background-color: $--color-danger-300;
   }
   .bg-theme-4 {
-    background-color: #{$--color-danger-400};
+    background-color: $--color-danger-400;
   }
   .bg-theme-5 {
-    background-color: #{$--color-danger-500};
+    background-color: $--color-danger-500;
   }
   .text-1 {
-    color: #{$--color-netural-100};
+    color: $--color-netural-100;
   }
   .text-2 {
-    color: #{$--color-netural-200};
+    color: $--color-netural-200;
   }
   .text-3 {
-    color: #{$--color-netural-300};
+    color: $--color-netural-300;
   }
   .text-4 {
-    color: #{$--color-netural-400};
+    color: $--color-netural-400;
   }
   .text-5 {
-    color: #{$--color-netural-500};
+    color: $--color-netural-500;
   }
   .text-theme-1 {
-    color: #{$--color-danger-100};
+    color: $--color-danger-100;
   }
   .text-theme-2 {
-    color: #{$--color-danger-200};
+    color: $--color-danger-200;
   }
   .text-theme-3 {
-    color: #{$--color-danger-300};
+    color: $--color-danger-300;
   }
   .text-theme-4 {
-    color: #{$--color-danger-400};
+    color: $--color-danger-400;
   }
   .text-theme-5 {
-    color: #{$--color-danger-500};
+    color: $--color-danger-500;
   }
 }

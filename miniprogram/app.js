@@ -6,7 +6,7 @@ App({
     this.setGlobalData = (field, value) => {
       this.globalData[field] = value
     }
-  
+
     this.initCustomStyle()
     await this.initcloud()
   },
@@ -50,9 +50,9 @@ App({
 
     this.setGlobalData('customWindow', {
       statusBarHeight,
-      navBarHeight: (screenWidth / 750) * 120 + 50
+      navBarHeight: (screenWidth / 750) * 120 + 50,
     })
 
-    wx.setStorageSync(THEME, wx.getSystemInfoSync(THEME) || theme)
+    wx.setStorageSync(THEME, wx.getStorageSync(THEME) || theme)
   },
 })

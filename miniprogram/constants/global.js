@@ -1,4 +1,4 @@
-const THEME = 'Theme'
+const THEME = 'theme'
 const THEME_MODE = {
   DARK: 'dark',
   LIGHT: 'light'

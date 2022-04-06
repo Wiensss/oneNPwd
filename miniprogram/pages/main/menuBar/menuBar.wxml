@@ -1,0 +1,10 @@
+<view class="mask {{ visible ? 'active' : '' }}" catch:tap="hideMenu">
+    <view class="menubar bg-4 {{ visible ? 'enter' : 'leave' }}" catch:tap="noop">
+        <slot />
+        <view class="flex flex-center gap-3">
+            <b-icon icon="sun" />
+            <switch color="#ff357f" checked="{{ isDark }}" bindchange="changeTheme" />
+            <b-icon icon="moon" />
+        </view>
+    </view>
+</view>
