@@ -1,8 +1,9 @@
 project.private.config.json
 
 # client
-client/utils/private.js
+miniprogram/node_modules
+miniprogram/*/package-lock.json
 
 # server
-server/*/node_modules
-server/*/package-lock.json
+cloudfunctions/*/node_modules
+cloudfunctions/*/package-lock.json

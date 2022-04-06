@@ -1,7 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {
-    "c-icon": "../icon/icon",
-    "c-slideiew": "../slideview/slideview"
-  }
-}
